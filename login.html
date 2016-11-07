@@ -1,0 +1,34 @@
+<head>
+	<link href="css/estilos-log.css" rel="stylesheet" type="text/css" media="all" />
+<!-- //Custom Theme files -->
+<!-- web font -->
+	<!--<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'> 
+	<link href='//fonts.googleapis.com/css?family=Athiti:400,200,300,500,600,700' rel='stylesheet' type='text/css'>-->
+</head>
+
+<div class="main">
+		<!-- login form one -->
+		<div class="login-form">  
+			<div class="agile-row">
+				<h2>Hello !</h2>   
+				<div class="login-agileits-top"> 
+					<form onsubmit="return false" method="post"> 
+						<div class="input-row">
+							<input type="text" class="user" name="User Name" placeholder="User Name" ng-model="usuario.correo" required=""/> 
+							<input type="password" class="password" name="Password" placeholder="Password" ng-model="usuario.clave" required=""/>
+								
+						</div>	
+						<div class="agileits-row2">
+							<input type="checkbox" id="brand" value="">
+							<label for="brand"><span></span> Remember me</label> 
+						</div>	
+						<input type="button" ng-click="Guardar()" value="LOGIN">
+					</form>  
+				</div>
+				<div class="login-agileits-bottom">  
+					<p class="w3ls-line">No tienes cuenta ?<a ng-click="Registrarse()">Registrate Ahora !</a></p>
+					<p class="w3ls-line" ng-show="registro">Si, tengo cuenta<a ng-click="Volver()">Volver a LogIn !</a></p>
+				</div> 
+			</div>  
+		</div>
+</div>
