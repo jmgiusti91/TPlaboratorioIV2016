@@ -74,27 +74,10 @@ $app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
     return $response;
 });
 /* POST: Para crear recursos */
-$app->post('/persona/{objeto}', function ($request, $response, $args) {
-    $persona = json_decode($args['objeto']);
-    $datos = Persona::TraerTodasLasPersonas();
-    if(is_null($datos)){
-        $nuevoCodFoto = 1;
-    } else{
-        $nuevoCodFoto = intval($datos[count($datos) - 1]->codFoto); //Obtengo el ultimo id de la base de datos.
-        $nuevoCodFoto++; //Lo incremento en 1 dado que ese va a ser el id que tenga la persona que voy a insertar a continuacion. con esto ya puedo armar el nombre de las fotos.
-    }
-    
-    $persona->codFoto = $nuevoCodFoto;
+$app->post('/cliente/{objeto}', function ($request, $response, $args) {
+    $cliente = json_decode($args['objeto']);
 
-    $nombreFoto = explode(".", $persona->foto1); // Tuve que hacerlo con el explode dado que si al tocar en el boton modificar, y sin modificar las fotos guardaba, se me concatenaban las extensiones de los archivos
-    $persona->foto1 = $nombreFoto[0]. " - ". $nuevoCodFoto . ".jpg";
-
-    $nombreFoto = explode(".", $persona->foto2);
-    $persona->foto2 = $nombreFoto[0]. " - ". $nuevoCodFoto . ".jpg";
-
-    $nombreFoto = explode(".", $persona->foto3);
-    $persona->foto3 = $nombreFoto[0]. " - ". $nuevoCodFoto . ".jpg";
-    Persona::InsertarPersona($persona);
+    //Cliente::InsertarCliente($cliente);
     $response->write($args['objeto']);
 }); /*Desde el cliente vamos a pasar un string.. Aca, en PHP, lo vamos a tomar encodear a JSON y tener listo el obj PHP..
     Vamos a tener que cambiar usuario y vamos a tener que devolver un JSON encodeado de TraerTodasLasPersonas. Eso lo vamos a devolver al AJAX */

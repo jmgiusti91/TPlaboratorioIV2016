@@ -8,10 +8,6 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 	$authProvider.tokenPrefix="Aplicacion";
 	$authProvider.authHeader="data";
 
-	$authProvider.github({
-      clientId: 'f169fb02e2243674fcb5'
-    });
-
 	$stateProvider
 		.state("inicio", {
 			url:"/inicio",
@@ -31,6 +27,16 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 				"registro": {
 					templateUrl:"login.html",
 					controller:"controlLogin"
+				}
+			}
+		})
+
+		.state("log.register", {
+			url:"/register",
+			views: {
+				"registro": {
+					templateUrl:"register.html",
+					controller:"controlRegistro"
 				}
 			}
 		})
