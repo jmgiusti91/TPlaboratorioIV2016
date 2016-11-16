@@ -74,13 +74,48 @@ $app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
     return $response;
 });
 /* POST: Para crear recursos */
-$app->post('/cliente/{objeto}', function ($request, $response, $args) {
+$app->post('/clientes/{objeto}', function ($request, $response, $args) {
     $cliente = json_decode($args['objeto']);
 
-    //Cliente::InsertarCliente($cliente);
+    Cliente::InsertarCliente($cliente);
     $response->write($args['objeto']);
 }); /*Desde el cliente vamos a pasar un string.. Aca, en PHP, lo vamos a tomar encodear a JSON y tener listo el obj PHP..
     Vamos a tener que cambiar usuario y vamos a tener que devolver un JSON encodeado de TraerTodasLasPersonas. Eso lo vamos a devolver al AJAX */
+
+$app->post('/empleados/{objeto}', function ($request, $response, $args) {
+    $empleado = json_decode($args['objeto']);
+
+    Empleado::InsertarEmpleado($empleado);
+    $response->write($args['objeto']);
+});
+
+$app->post('/locales/{objeto}', function ($request, $response, $args) {
+    $local = json_decode($args['objeto']);
+
+    Local::InsertarLocal($local);
+    $response->write($args['objeto']);
+});
+
+$app->get('/locales[/]', function ($request, $response, $args) {
+    $datos = Local::TraerTodosLosLocales();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+$app->post('/productos/{objeto}', function ($request, $response, $args) {
+    $producto = json_decode($args['objeto']);
+
+    Producto::InsertarProducto($producto);
+    $response->write($args['objeto']);
+});
+
+$app->get('/productos[/]', function ($request, $response, $args) {
+    $datos = Producto::TraerTodosLosProductos();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
 
 
 $app->post('/archivo[/]', function ($request, $response, $args) {
@@ -89,16 +124,16 @@ $app->post('/archivo[/]', function ($request, $response, $args) {
     try {
 
     $temporal = $_FILES[ 'file' ][ 'tmp_name' ];
-    $datos = Persona::TraerTodasLasPersonas();
+    /*$datos = Persona::TraerTodasLasPersonas();
     if(is_null($datos)){
         $nuevoCodFoto = 1;
     } else{
         $nuevoCodFoto = intval($datos[count($datos) - 1]->codFoto);
         $nuevoCodFoto++;
-    }
+    }*/
     
     $nombreFoto = explode(".", $_FILES['file']['name']);
-    $archivoTmp = $nombreFoto[0]. " - ".$nuevoCodFoto . ".jpg";
+    $archivoTmp = $nombreFoto[0] . ".jpg";
 
     $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $archivoTmp;
     //$dst = $path . $_FILES['photoimg']['name'];
@@ -125,8 +160,8 @@ $app->post('/archivo[/]', function ($request, $response, $args) {
     imagejpeg($tmp, $ruta);
 
 
-    $rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $archivoTmp;
-    copy($ruta, $rutaMod);
+    //$rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $archivoTmp;
+    //copy($ruta, $rutaMod);
 
     } catch (Exception $e) {
         echo $e->message;
@@ -159,8 +194,8 @@ $app->post('/archivoModificar/{codFoto}', function ($request, $response, $args) 
       default : die("Unknown filetype");
     }
 
-    $nuevoWidth = 1200;
-    $nuevoHeight = 800;
+    $nuevoWidth = 1000;
+    $nuevoHeight = 500;
 
     $tmp = imagecreatetruecolor($nuevoWidth, $nuevoHeight);
     imagecopyresampled($tmp, $src, 0, 0, 0, 0, $nuevoWidth, $nuevoHeight, $width, $height);

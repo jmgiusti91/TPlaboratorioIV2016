@@ -1,7 +1,9 @@
 angular.module('app.controllers')
 
-.controller('controlRegistro', function($scope, $state, $timeout, ClienteService){
+.controller('controlRegistro', function($scope, $state, $timeout, ClienteService, UsuarioActual){
 
+	$scope.usuario = JSON.parse(UsuarioActual.getFullData());
+	console.log($scope.usuario);
 	$scope.cliente = {};
 	$scope.cliente.nombre = "Jacinto";
 	$scope.cliente.telefono = 42228888;

@@ -14,21 +14,19 @@
 				<div class="login-agileits-top"> 
 					<form onsubmit="return false" method="post"> 
 						<div class="input-row">
-							<input type="text" class="user" name="User Name" placeholder="User Name" ng-model="usuario.correo" required=""/> 
+							<input type="email" class="email" name="email" placeholder="Email" ng-model="usuario.email" required=""/> 
 							<input type="password" class="password" name="Password" placeholder="Password" ng-model="usuario.clave" required=""/>
 								
-						</div>	
-						<div class="agileits-row2">
-							<input type="checkbox" id="brand" value="">
-							<label for="brand"><span></span> Remember me</label> 
-						</div>	
+						</div>
+						<br><br>		
 						<input type="button" ng-click="Guardar()" value="LOGIN">
 					</form>  
-				</div>
-				<div class="login-agileits-bottom">  
-					<p class="w3ls-line">No tienes cuenta ?<a ng-click="Registrarse()">Registrate Ahora !</a></p>
-					<p class="w3ls-line" ng-show="registro">Si, tengo cuenta<a ng-click="Volver()">Volver a LogIn !</a></p>
 				</div> 
 			</div>  
 		</div>
+
+		<button class="btn btn-info btn-lg" ng-click="IngresoAdmin()">Ingresar Como Admin</button>
+		<button class="btn btn-info btn-lg" ng-click="IngresoEncargado()">Ingresar Como Encargado</button>
+		<button class="btn btn-info btn-lg" ng-click="IngresoEmpleado()">Ingresar Como Empleado</button>
+		<button class="btn btn-info btn-lg" ng-click="IngresoCliente()">Ingresar Como Cliente</button>
 </div>

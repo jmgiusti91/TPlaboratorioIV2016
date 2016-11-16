@@ -16,9 +16,21 @@
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/ngThumb.js"></script>
 	<script src="js/controladores/controlInicio.js"></script>
+	<script src="js/controladores/controlIndex.js"></script>
 	<script src="js/controladores/controlLogin.js"></script>
 	<script src="js/controladores/controlRegistro.js"></script>
+	<script src="js/controladores/controlBienvenida.js"></script>
+	<script src="js/controladores/controlLocal.js"></script>
+	<script src="js/controladores/controlLocalesPerfil.js"></script>
+	<script src="js/controladores/controlProductos.js"></script>
+	<script src="js/controladores/controlProductosPerfil.js"></script>
+	<script src="js/controladores/controlEmpleados.js"></script>
 	<script src="js/servicios/serviciosCliente.js"></script>
+	<script src="js/servicios/serviciosEmpleado.js"></script>
+	<script src="js/servicios/serviciosLocal.js"></script>
+	<script src="js/servicios/serviciosProducto.js"></script>
+	<script src="js/factories/factoryUsuario.js"></script>
+	<script src="js/factories/factoryRutas.js"></script>
 	<!--El service siempre lo llamamos despues de los controllers y en el angular.module del mismo no hay que agregar []-->
 
 	
@@ -41,11 +53,16 @@
 	                
 	                <!--INICIA MENU -->
 	                
-	                <div class="collapse navbar-collapse" id="navegacion-fm">
+	                <div class="collapse navbar-collapse" id="navegacion-fm" ng-controller="IndexCtrl">
 	                    <ul class="nav navbar-nav">
 	                        <li><a href="#/inicio">Inicio</a></li>
-	                        <li><a href="#/log/login">Log In</a></li>
-	                        <li><a href="#/log/register">Registrarse</a></li>
+	                        <li ng-if="userActual.login"><a ng-click="Logout()" class="btn btn-danger btn-sm" style="cursor:pointer;">Log Out</a></li>
+	                        <li ng-if="!userActual.login"><a href="#/log/login">Log In</a></li>
+	                        <li ng-if="!userActual.login"><a href="#/log/register">Registrarse</a></li>
+	                        <li ng-if="userActual.tipo == 'administrador'"><a href="#/altaLocales">Alta de Locales</a></li>
+	                        <li ng-if="userActual.login && userActual.tipo != 'cliente'"><a href="#/altaProductos">Alta de Productos</a></li>
+	                        <li ng-if="userActual.tipo == 'administrador' || userActual.tipo == 'encargado'"><a href="#/altaEmpleados">Alta de Empleados</a></li>
+	                        <li ng-if="userActual.login && userActual.tipo != 'cliente'"><a href="#/altaClientes">Alta de Clientes</a></li>
 	                    </ul>
 	                    
 	                    <!--<form action="" class="navbar-form navbar-right" role="search">

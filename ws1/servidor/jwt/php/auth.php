@@ -1,5 +1,7 @@
 <?php
 include_once '../vendor/autoload.php';
+include_once('../../../servidor/Clientes.php');
+include_once('../../../servidor/Empleados.php');
 use \Firebase\JWT\JWT;
 /**
  * IMPORTANT:
@@ -9,22 +11,46 @@ use \Firebase\JWT\JWT;
  */
 $DatosDelModeloPorPost = file_get_contents('php://input');
 $usuario = json_decode($DatosDelModeloPorPost);
-if ($usuario->correo == "usuario" && $usuario->clave == "clave") {
-	$key = "1234";
+
+$clienteActual = Cliente::AutenticarCliente($usuario->email, $usuario->clave);
+
+if (!is_null($clienteActual) && !empty($clienteActual)) {
+	$key = "aaaa";
 	$ClaveDeEncriptacion="estaeslaclave";
-	$token["usuario"]="unusuario";
-	$token["perfil"]="admin";
+	$token["nombre"]=$clienteActual->nombre;
+	$token["tipo"]="cliente";
+	$token["email"] = $clienteActual->email;
+	$token["telefono"] = $clienteActual->telefono;
+	$token["habilitado"] = $clienteActual->habilitado;
 	$token["iat"]=time();
 	$token["exp"]=time()+20;
-
-	$token["username"] = "usuario";
-	$token["tipoUsuario"] = "admin";
 
 	$jwt = JWT::encode($token, $key);
 
 	$ArrayConToken["MiTokenGeneradoEnPHP"] = $jwt;
 } else {
-	$ArrayConToken["MiTokenGeneradoEnPHP"] = false;
+
+	$empleadoActual = Empleado::AutenticarEmpleado($usuario->email, $usuario->clave);
+
+	if (!is_null($empleadoActual)) {
+		$key = "aaaa";
+		$ClaveDeEncriptacion="estaeslaclave";
+		$token["nombre"]=$empleadoActual->nombre;
+		$token["tipo"]=$empleadoActual->tipo;
+		$token["email"] = $empleadoActual->email;
+		$token["habilitado"] = $empleadoActual->habilitado;
+		$token["iat"]=time();
+		$token["exp"]=time()+20;
+
+		$jwt = JWT::encode($token, $key);
+
+		$ArrayConToken["MiTokenGeneradoEnPHP"] = $jwt;
+	} else {
+
+		$ArrayConToken["MiTokenGeneradoEnPHP"] = false;
+
+	}
+	
 }
 
 echo json_encode($ArrayConToken);

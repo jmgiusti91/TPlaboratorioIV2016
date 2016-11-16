@@ -38,27 +38,33 @@
           <span id="lblClave2" style="color:#FF0000;float:right;font-size:18" ng-show='FormIngreso.clave2.$error.required'>* La clave es requerida</span><br>
           <br><span style="color:#FF0000;float:right;font-size:18;margin-left:200" ng-show='cliente.password != cliente.copiapassword'>* Las claves no coinciden</span>
         </fieldset> 
-
-        <button ng-disabled="FormIngreso.$invalid || cliente.password != cliente.copiapassword" name="guardar" ng-click="Guardar()" href="#ventanaOk" data-toggle="modal">Registrarse</button>
-
-
-        <!-- Ventana emergente Registro Correcto -->
+        
+        <div ng-if="usuario.tipo == ''">
+          <button ng-disabled="FormIngreso.$invalid || cliente.password != cliente.copiapassword" name="guardar" ng-click="Guardar()" href="#ventanaOk" data-toggle="modal">Registrarse</button>
 
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="ventanaOk">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Registro exitoso!</h4>
-              </div>
-              <div class="modal-body">
-                <p>Felicitaciones y muchas gracias por unirte a la comunidad de pizzerias argenta... Para comenzar a operar logueate al sistema con el email y password ingresado en el formulario de registro.</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="Loguearme()">Aceptar</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+          <!-- Ventana emergente Registro Correcto -->
+
+
+          <div class="modal fade" tabindex="-1" role="dialog" id="ventanaOk">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Registro exitoso!</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Felicitaciones y muchas gracias por unirte a la comunidad de pizzerias argenta... Para comenzar a operar logueate al sistema con el email y password ingresado en el formulario de registro.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="Loguearme()">Aceptar</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+        </div>
+
+        <div ng-if="usuario.tipo != ''">
+          <button ng-disabled="FormIngreso.$invalid || cliente.password != cliente.copiapassword" name="guardar" ng-click="Guardar()" href="#ventanaOk" data-toggle="modal">Registrarse</button>
+        </div>
 
   </form>

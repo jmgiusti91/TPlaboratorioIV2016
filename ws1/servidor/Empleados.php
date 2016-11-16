@@ -133,6 +133,18 @@ class Empleado
 		$arrEmpleados= $consulta->fetchAll(PDO::FETCH_CLASS, "empleado");	
 		return $arrEmpleados;
 	}
+
+	public static function AutenticarEmpleado($mailEmpleado, $claveEmpleado)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM empleados WHERE email=:email AND clave=:clave");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta->bindValue(':email', $mailEmpleado, PDO::PARAM_STR);
+		$consulta->bindValue(':clave', $claveEmpleado, PDO::PARAM_STR);
+		$consulta->execute();			
+		$empleadoBuscado= $consulta->fetchObject('empleado');
+		return $empleadoBuscado;	
+	}
 	
 	public static function BorrarEmpleado($idParametro)
 	{	
@@ -182,7 +194,7 @@ class Empleado
 		$consulta->bindValue(':clave', $empleado->clave, PDO::PARAM_STR);
 		$consulta->bindValue(':tipo', $empleado->tipo, PDO::PARAM_STR);
 		$consulta->bindValue(':habilitado',$empleado->habilitado, PDO::PARAM_INT);
-		$consulta->bindValue(':id_local',$empleado->habilitado, PDO::PARAM_INT);
+		$consulta->bindValue(':id_local',$empleado->id_local, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	

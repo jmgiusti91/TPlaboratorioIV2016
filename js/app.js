@@ -1,5 +1,12 @@
 angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'satellizer'])
 
+.run(function($rootScope){
+
+	$rootScope.userActual = {};
+	$rootScope.userActual.login = false;
+	$rootScope.userActual.nombre = "JuanGiusti";
+
+})
 
 .config(function ($stateProvider, $urlRouterProvider, $authProvider){
 
@@ -39,6 +46,48 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 					controller:"controlRegistro"
 				}
 			}
+		})
+
+		.state("bienvenida", {
+			url:"/bienvenida",
+			templateUrl: "bienvenida.html",
+			controller:"BienvenidaCtrl"
+		})
+
+		.state("altaLocales", {
+			url:"/altaLocales",
+			templateUrl: "altaLocales.html",
+			controller:"altaLocalesCtrl"
+		})
+
+		.state("locales-perfil", {
+			url:"/locales-perfil",
+			templateUrl: "locales-perfil.html",
+			controller:"localesPerfilCtrl"
+		})
+
+		.state("altaProductos", {
+			url:"/altaProductos",
+			templateUrl: "altaProductos.html",
+			controller:"altaProductosCtrl"
+		})
+
+		.state("productos-perfil", {
+			url:"/productos-perfil",
+			templateUrl: "productos-perfil.html",
+			controller:"productosPerfilCtrl"
+		})
+
+		.state("altaEmpleados", {
+			url:"/altaEmpleados",
+			templateUrl: "altaEmpleados.html",
+			controller:"altaEmpleadosCtrl"
+		})
+
+		.state("altaClientes", {
+			url:"/altaClientes",
+			templateUrl: "register.html",
+			controller:"controlRegistro"
 		})
 
 	//$urlRouterProvider.otherwise("/inicio");

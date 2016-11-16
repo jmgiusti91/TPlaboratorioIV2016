@@ -124,6 +124,19 @@ class Cliente
 		$arrClientes= $consulta->fetchAll(PDO::FETCH_CLASS, "cliente");	
 		return $arrClientes;
 	}
+
+
+	public static function AutenticarCliente($mailCliente, $claveCliente)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM clientes WHERE email=:email AND clave=:clave");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta->bindValue(':email', $mailCliente, PDO::PARAM_STR);
+		$consulta->bindValue(':clave', $claveCliente, PDO::PARAM_STR);
+		$consulta->execute();			
+		$clienteBuscado= $consulta->fetchObject('cliente');
+		return $clienteBuscado;	
+	}
 	
 	public static function BorrarCliente($idParametro)
 	{	
