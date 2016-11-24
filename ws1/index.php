@@ -82,11 +82,39 @@ $app->post('/clientes/{objeto}', function ($request, $response, $args) {
 }); /*Desde el cliente vamos a pasar un string.. Aca, en PHP, lo vamos a tomar encodear a JSON y tener listo el obj PHP..
     Vamos a tener que cambiar usuario y vamos a tener que devolver un JSON encodeado de TraerTodasLasPersonas. Eso lo vamos a devolver al AJAX */
 
+$app->get('/clientes[/]', function ($request, $response, $args) {
+    $datos = Cliente::TraerTodosLosClientes();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+$app->put('/clientes/{idCliente}/{habilitado}', function ($request, $response, $args) {
+    $datos = Cliente::HabilitarCliente($args['idCliente'], $args['habilitado']);
+    //$response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $args['habilitado'];
+});
+
 $app->post('/empleados/{objeto}', function ($request, $response, $args) {
     $empleado = json_decode($args['objeto']);
 
     Empleado::InsertarEmpleado($empleado);
     $response->write($args['objeto']);
+});
+
+$app->get('/empleados[/]', function ($request, $response, $args) {
+    $datos = Empleado::TraerTodosLosEmpleados();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+$app->put('/empleados/{idEmpleado}/{habilitado}', function ($request, $response, $args) {
+    $datos = Empleado::HabilitarEmpleado($args['idEmpleado'], $args['habilitado']);
+    //$response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $args['habilitado'];
 });
 
 $app->post('/locales/{objeto}', function ($request, $response, $args) {
@@ -110,8 +138,47 @@ $app->post('/productos/{objeto}', function ($request, $response, $args) {
     $response->write($args['objeto']);
 });
 
+$app->put('/productos/{objeto}', function ($request, $response, $args) {
+
+    $producto = json_decode($args['objeto']);
+    //$archivoTmp = $persona->foto1. " - ".$persona->codFoto . ".jpg";
+    
+    Producto::ModificarProducto($producto);
+    
+    $response->write($args['objeto']);
+});
+
+$app->delete('/productos/{id}', function ($request, $response, $args) {
+    Producto::BorrarProducto($args['id']);
+    return $response;
+});
+
 $app->get('/productos[/]', function ($request, $response, $args) {
     $datos = Producto::TraerTodosLosProductos();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+
+$app->get('/productos/{idLocal}', function ($request, $response, $args) {
+    $datos = Producto::TraerProductosPorLocal($args['idLocal']);
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+
+$app->post('/reservas/{objeto}', function ($request, $response, $args) {
+    $reserva = json_decode($args['objeto']);
+
+    Reserva::InsertarReserva($reserva);
+    $response->write($args['objeto']);
+});
+
+
+$app->get('/reservas[/]', function ($request, $response, $args) {
+    $datos = Reserva::TraerTodasLasReservas();
     $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
     
     return $response;

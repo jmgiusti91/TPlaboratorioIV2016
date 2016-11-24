@@ -1,4 +1,4 @@
-angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'satellizer'])
+angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'satellizer', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.edit'])
 
 .run(function($rootScope){
 
@@ -88,6 +88,36 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 			url:"/altaClientes",
 			templateUrl: "register.html",
 			controller:"controlRegistro"
+		})
+
+		.state("grillaProductos", {
+			url:"/grillaProductos",
+			templateUrl: "grillaProductos.html",
+			controller:"grillaProductosCtrl"
+		})
+
+		.state("modificarProductos", {
+			url:"/modificarProductos/{id_producto}?:nombre:descripcion:foto1:foto2:foto3:tipo:precio:id_local",
+			templateUrl: "altaProductos.html",
+			controller:"modificarProductosCtrl"
+		})
+
+		.state("grillaLocales", {
+			url:"/grillaLocales",
+			templateUrl: "grillaLocales.html",
+			controller:"grillaLocalesCtrl"
+		})
+
+		.state("grillaReservas", {
+			url:"/grillaReservas",
+			templateUrl: "grillaReservas.html",
+			controller:"grillaReservasCtrl"
+		})
+
+		.state("grillaUsuarios", {
+			url:"/grillaUsuarios",
+			templateUrl: "grillaUsuarios.html",
+			controller:"grillaUsuariosCtrl"
 		})
 
 	//$urlRouterProvider.otherwise("/inicio");

@@ -14,7 +14,7 @@ $usuario = json_decode($DatosDelModeloPorPost);
 
 $clienteActual = Cliente::AutenticarCliente($usuario->email, $usuario->clave);
 
-if (!is_null($clienteActual) && !empty($clienteActual)) {
+if (!is_null($clienteActual) && !empty($clienteActual) && $clienteActual->habilitado == 1) {
 	$key = "aaaa";
 	$ClaveDeEncriptacion="estaeslaclave";
 	$token["nombre"]=$clienteActual->nombre;
@@ -22,6 +22,7 @@ if (!is_null($clienteActual) && !empty($clienteActual)) {
 	$token["email"] = $clienteActual->email;
 	$token["telefono"] = $clienteActual->telefono;
 	$token["habilitado"] = $clienteActual->habilitado;
+	$token["id"] = $clienteActual->id_cliente;
 	$token["iat"]=time();
 	$token["exp"]=time()+20;
 
@@ -32,13 +33,14 @@ if (!is_null($clienteActual) && !empty($clienteActual)) {
 
 	$empleadoActual = Empleado::AutenticarEmpleado($usuario->email, $usuario->clave);
 
-	if (!is_null($empleadoActual)) {
+	if (!is_null($empleadoActual) && $empleadoActual->habilitado == 1) {
 		$key = "aaaa";
 		$ClaveDeEncriptacion="estaeslaclave";
 		$token["nombre"]=$empleadoActual->nombre;
 		$token["tipo"]=$empleadoActual->tipo;
 		$token["email"] = $empleadoActual->email;
 		$token["habilitado"] = $empleadoActual->habilitado;
+		$token["id"] = $empleadoActual->id_empleado;
 		$token["iat"]=time();
 		$token["exp"]=time()+20;
 

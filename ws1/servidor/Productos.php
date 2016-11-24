@@ -155,6 +155,20 @@ class Producto
 		$arrProductos= $consulta->fetchAll(PDO::FETCH_CLASS, "producto");	
 		return $arrProductos;
 	}
+
+	public static function TraerProductosPorLocal($idLocal) 
+	{	
+
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM productos WHERE id_local=:id");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerUnaPersona(:id)");
+		$consulta->bindValue(':id', $idLocal, PDO::PARAM_INT);
+		$consulta->execute();
+		$arrProductos= $consulta->fetchAll(PDO::FETCH_CLASS, "producto");
+		return $arrProductos;	
+					
+	}
 	
 	public static function BorrarProducto($idParametro)
 	{	

@@ -1,0 +1,53 @@
+<div>	
+  <h3>{{titulo}}</h3>
+  <div ui-grid="gridLocales" class="myGrid"
+    ui-grid-pagination
+    ui-grid-resize-columns
+    ui-grid-selection
+    ui-grid-exporter
+  ></div>
+
+  <div ng-if="verProductos">
+  	
+	<div ui-grid="gridProductos" class="myGrid"
+	    ui-grid-pagination
+	    ui-grid-resize-columns
+	    ui-grid-selection
+	    ui-grid-exporter
+  	></div>
+
+  </div>
+
+
+ <div>
+ 	
+	<div class="modal fade" tabindex="-1" role="dialog" id="ventanaReserva">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              	<form id="FormReserva" name="FormReserva" enctype="multipart/form-data">
+	                <div class="modal-header">
+	                  <h4 class="modal-title">Ingrese fecha de reserva: </h4>
+	                </div>
+	                <div class="modal-body">
+	                  	<input type="date" name="fechaReserva" id="fechaReserva" ng-model="reserva.fechaReserva" min="{{fechaMin}}" max="{{fechaMax}}" required>
+	                  	<span id="lblFecha" style="color:#FF0000;float:right;font-size:18" ng-show='FormReserva.fechaReserva.$error.required'>* La fecha de reserva es requerida</span><br>
+          				    <span style="color:#FF0000;float:right;font-size:18;margin-left:0" ng-show='FormReserva.fechaReserva.$invalid'>* La fecha no esta en un rango valido</span>
+                      <div ng-if="usuario.tipo == 'empleado' || usuario.tipo == 'encargado'">
+                        <select id="cliente" name="cliente" ng-model="reserva.id_cliente" ng-init="reserva.id_cliente">
+                              <option ng-repeat="c in listadoClientes" value="{{c.id_cliente}}">{{c.email}}</option>
+                        </select>
+                      </div>
+	                </div>
+	                <div class="modal-footer">
+	                  <button class="btn btn-success" ng-disabled="FormReserva.fechaReserva.$invalid" data-dismiss="modal" ng-click="Reservar()">Aceptar</button>
+	                  <button class="btn btn-danger" data-dismiss="modal" ng-click="Cancelar()">Cancelar</button>
+	                </div>
+                </form>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+ </div>
+
+
+</div>

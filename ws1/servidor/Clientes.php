@@ -170,6 +170,19 @@ class Cliente
 			return $consulta->execute();
 	}
 
+	public static function HabilitarCliente($idCliente, $habilitado)
+	{
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("
+				UPDATE clientes 
+				SET habilitado=:habilitado
+				WHERE id_cliente=:id");
+			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarEmpleado(:id,:nombre,:nombre,:email,:clave,:tipo)");
+			$consulta->bindValue(':id',$idCliente, PDO::PARAM_INT);
+			$consulta->bindValue(':habilitado',$habilitado, PDO::PARAM_INT);
+			return $consulta->execute();
+	}
+
 //--------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------//

@@ -180,6 +180,20 @@ class Empleado
 			return $consulta->execute();
 	}
 
+
+	public static function HabilitarEmpleado($idEmpleado, $habilitado)
+	{
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("
+				UPDATE empleados 
+				SET habilitado=:habilitado
+				WHERE id_empleado=:id");
+			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarEmpleado(:id,:nombre,:nombre,:email,:clave,:tipo)");
+			$consulta->bindValue(':id',$idEmpleado, PDO::PARAM_INT);
+			$consulta->bindValue(':habilitado',$habilitado, PDO::PARAM_INT);
+			return $consulta->execute();
+	}
+
 //--------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------//

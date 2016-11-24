@@ -4,9 +4,9 @@ class Reserva
 {
 //--------------------------------------------------------------------------------//
 //--ATRIBUTOS
-	public $id_pedido;
+	public $id_producto;
 	public $id_cliente;
-	public $fecha;
+	public $fechaReserva;
   	public $estado;
   	//public $codFoto;
 
@@ -14,17 +14,17 @@ class Reserva
 
 //--------------------------------------------------------------------------------//
 //--GETTERS Y SETTERS
-  	public function GetIdPedido()
+  	public function GetIdProducto()
 	{
-		return $this->id_pedido;
+		return $this->id_producto;
 	}
 	public function GetIdCliente()
 	{
 		return $this->id_cliente;
 	}
-	public function GetFecha()
+	public function GetFechaReserva()
 	{
-		return $this->fecha;
+		return $this->fechaReserva;
 	}
 	public function GetEstado()
 	{
@@ -32,17 +32,17 @@ class Reserva
 	}
 
 
-	public function SetIdPedido($valor)
+	public function SetIdProducto($valor)
 	{
-		$this->id_pedido = $valor;
+		$this->id_producto = $valor;
 	}
 	public function SetIdCliente($valor)
 	{
 		$this->id_cliente = $valor;
 	}
-	public function SetFecha($valor)
+	public function SetFechaReserva($valor)
 	{
-		$this->fecha = $valor;
+		$this->fechaReserva = $valor;
 	}
 	public function SetEstado($valor)
 	{
@@ -51,15 +51,15 @@ class Reserva
 
 //--------------------------------------------------------------------------------//
 //--CONSTRUCTOR
-	public function __construct($id_pedido=NULL)
+	public function __construct($id_producto=NULL)
 	{
-		if($id_pedido != NULL){
-			$obj = Reserva::TraerUnaReserva($id_pedido);
+		if($id_producto != NULL){
+			$obj = Reserva::TraerUnaReserva($id_producto);
 			
 			$this->id_cliente = $obj->id_cliente;
-			$this->fecha = $obj->fecha;
+			$this->fechaReserva = $obj->fechaReserva;
 			$this->estado = $obj->estado;
-			$this->id_pedido = $obj->id_pedido;
+			$this->id_producto = $obj->id_producto;
 			//$this->codFoto = $obj->codFoto;
 		}
 	}
@@ -68,20 +68,20 @@ class Reserva
 //--TOSTRING	
   	public function ToString()
 	{
-	  	return $this->id_cliente."-".$this->fecha."-".$this->estado."-".$this->id_pedido;
+	  	return $this->id_cliente."-".$this->fechaReserva."-".$this->estado."-".$this->id_producto;
 	}
 //--------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------//
 //--METODO DE CLASE
-	public static function TraerUnaReserva($idPedido, $idCliente) 
+	public static function TraerUnaReserva($idProducto, $idCliente) 
 	{	
 
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM reservas WHERE id_pedido=:id_pedido AND id_cliente=:id_cliente");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM reservas WHERE id_producto=:id_producto AND id_cliente=:id_cliente");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerUnaPersona(:id)");
-		$consulta->bindValue(':id_pedido', $idPedido, PDO::PARAM_INT);
+		$consulta->bindValue(':id_producto', $idProducto, PDO::PARAM_INT);
 		$consulta->bindValue(':id_cliente', $idCliente, PDO::PARAM_INT);
 		$consulta->execute();
 		$reservaBuscada= $consulta->fetchObject('reserva');
@@ -89,22 +89,22 @@ class Reserva
 					
 	}
 	
-	public static function TraerTodosLosreservas()
+	public static function TraerTodasLasReservas()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM reservas ");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT c.nombre as nombreCliente, c.id_cliente, c.email, c.telefono, p.nombre as nombreProducto, p.precio, r.fechaReserva, r.estado FROM clientes as c, productos as p, reservas as r WHERE r.id_cliente = c.id_cliente AND r.id_producto = p.id_producto");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
 		$consulta->execute();			
-		$arrReservas= $consulta->fetchAll(PDO::FETCH_CLASS, "reserva");	
+		$arrReservas= $consulta->fetchAll(PDO::FETCH_OBJ);	
 		return $arrReservas;
 	}
 	
-	public static function BorrarReserva($idPedido, $idCliente)
+	public static function BorrarReserva($idProducto, $idCliente)
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("DELETE FROM reservas WHERE id_pedido=:id_pedido AND id_cliente=:id_cliente");
+		$consulta =$objetoAccesoDato->RetornarConsulta("DELETE FROM reservas WHERE id_producto=:id_producto AND id_cliente=:id_cliente");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL BorrarPersona(:id)");	
-		$consulta->bindValue(':id_pedido', $idPedido, PDO::PARAM_INT);
+		$consulta->bindValue(':id_producto', $idProducto, PDO::PARAM_INT);
 		$consulta->bindValue(':id_cliente', $idCliente, PDO::PARAM_INT);	
 		$consulta->execute();
 		return $consulta->rowCount();
@@ -116,14 +116,14 @@ class Reserva
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				UPDATE reservas 
-				SET fecha=:fecha,
+				SET fechaReserva=:fechaReserva,
 				estado=:estado,
-				WHERE id_pedido=:id_pedido
+				WHERE id_producto=:id_producto
 				AND id_cliente=:id_cliente");
-			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarReserva(:id,:fecha,:id_cliente,:fecha,:estado,:id_local)");
-			$consulta->bindValue(':id_pedido',$reserva->id_pedido, PDO::PARAM_INT);
+			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarReserva(:id,:fechaReserva,:id_cliente,:fechaReserva,:estado,:id_local)");
+			$consulta->bindValue(':id_producto',$reserva->id_producto, PDO::PARAM_INT);
 			$consulta->bindValue(':id_cliente', $reserva->id_cliente, PDO::PARAM_STR);
-			$consulta->bindValue(':fecha', $reserva->fecha, PDO::PARAM_STR);
+			$consulta->bindValue(':fechaReserva', $reserva->fechaReserva, PDO::PARAM_STR);
 			$consulta->bindValue(':estado', $reserva->estado, PDO::PARAM_STR);
 			return $consulta->execute();
 	}
@@ -135,11 +135,11 @@ class Reserva
 	public static function InsertarReserva($reserva)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into reservas (id_cliente,id_pedido,fecha,estado)values(:id_cliente,:id_pedido,:fecha,:estado)");
-		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarLocal (:fecha,:id_cliente,:dni,:fecha,:estado,:id_local,:codFoto)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into reservas (id_cliente,id_producto,fechaReserva,estado)values(:id_cliente,:id_producto,:fechaReserva,:estado)");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarLocal (:fechaReserva,:id_cliente,:dni,:fechaReserva,:estado,:id_local,:codFoto)");
 		$consulta->bindValue(':id_cliente', $reserva->id_cliente, PDO::PARAM_STR);
-		$consulta->bindValue(':id_pedido', $reserva->id_pedido, PDO::PARAM_STR);
-		$consulta->bindValue(':fecha', $reserva->fecha, PDO::PARAM_STR);
+		$consulta->bindValue(':id_producto', $reserva->id_producto, PDO::PARAM_STR);
+		$consulta->bindValue(':fechaReserva', $reserva->fechaReserva, PDO::PARAM_STR);
 		$consulta->bindValue(':estado', $reserva->estado, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();

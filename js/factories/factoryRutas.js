@@ -13,6 +13,8 @@ angular
 
     objeto.RutaProductos = 'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/productos/';
 
+    objeto.RutaReservas = 'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/reservas/';
+
     return objeto;
 
 
