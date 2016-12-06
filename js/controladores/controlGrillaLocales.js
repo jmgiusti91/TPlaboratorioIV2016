@@ -64,7 +64,7 @@ angular.module('app.controllers')
     });*/
 
 
-    LocalService.traerTodos()
+    LocalService.traerTodosActivos(1)
     	.then(function (respuesta){
 
     		console.info("todos los locales", respuesta);
@@ -195,37 +195,6 @@ angular.module('app.controllers')
             })
 
       };
-
-
-    /*$scope.Borrar = function (rta){
-
-    	var dato = JSON.stringify(parseInt(rta.id_producto)); 
-
-      console.log(rta);
-
-    	ProductoService.borrarProducto(dato)
-    		.then(function (respuesta){
-
-    			ProductoService.traerTodos()
-			    	.then(function (respuesta){
-
-			    		console.info("todos los productos", respuesta);
-
-			    		$scope.gridLocales.data = respuesta.data;
-
-			    	}).catch(function (error){
-
-			    		$scope.gridLocales.data = [];
-
-			    	})
-
-    		}).catch(function (error){
-
-    			console.log(error);
-
-    		})
-
-    }*/
 
     function columnProductos () {
       return [

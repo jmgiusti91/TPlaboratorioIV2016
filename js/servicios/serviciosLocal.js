@@ -6,6 +6,10 @@ angular
 
 		this.traerTodos = TraerTodos;
 
+		this.traerTodosActivos = TraerTodosActivos;
+
+		this.modificarLocal = ModificarLocal;
+
 		var url = factoryRutas.RutaLocales;
 
 		function InsertarLocal(local){
@@ -39,5 +43,34 @@ angular
 				})
 
 		};
+
+		function ModificarLocal(local){
+
+			return $http.put(url + local)
+				.then(function (respuesta){
+
+					return respuesta;
+
+				}).catch(function (error){
+
+					console.log(error);
+
+				})
+
+		};
+
+		function TraerTodosActivos(numero){
+
+			return $http.get(url + numero)
+				.then(function (respuesta){
+
+					return respuesta;
+
+				}).catch(function (error){
+
+					console.log(error);
+
+				})
+		}
 
 	})

@@ -1,0 +1,27 @@
+<div>
+  <h3>{{titulo}}</h3>
+  <div ui-grid="gridOptions" class="myGrid"
+    ui-grid-pagination
+    ui-grid-resize-columns
+    ui-grid-selection
+    ui-grid-exporter
+  ></div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="ventanaTransferir">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content" style="background-color:#FFA500">
+	                <div class="modal-header">
+	                  <h4 class="modal-title"><i class="glyphicon glyphicon-alert">&nbsp;ADVERTENCIA </i></h4>
+	                </div>
+	                <div class="modal-body">
+	                  	<p>Tenga en cuenta que al transferir un empleado, si el local queda sin encargado o con menos de dos empleados, ESTE DEJARA DE ESTAR DISPONIBLE para realizar transacciones como reservas o consultas en los mapas.</p>
+	                </div>
+	                <div class="modal-footer">
+	                  <button class="btn btn-success" data-dismiss="modal" ng-click="Aceptar()">Aceptar</button>
+	                  <button class="btn btn-danger" data-dismiss="modal" ng-click="Cancelar()">Cancelar</button>
+	                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

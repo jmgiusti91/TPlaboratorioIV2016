@@ -6,6 +6,10 @@ angular
 
 		this.traerTodos = TraerTodos;
 
+		this.modificarReserva = ModificarReserva;
+
+		this.traerConsumido = TraerConsumido;
+
 		var url = factoryRutas.RutaReservas;
 
 		function InsertarReserva(reserva){
@@ -28,6 +32,36 @@ angular
 		function TraerTodos(){
 
 			return $http.get(url)
+				.then(function (respuesta){
+
+					return respuesta;
+
+				}).catch(function (error){
+
+					console.log(error);
+
+				})
+
+		};
+
+		function ModificarReserva(reserva){
+
+			return $http.put(url + reserva)
+				.then(function (respuesta){
+
+					return respuesta;
+
+				}).catch(function (error){
+
+					console.log(error);
+
+				})
+
+		};
+
+		function TraerConsumido(idCliente){
+
+			return $http.get(url + idCliente)
 				.then(function (respuesta){
 
 					return respuesta;

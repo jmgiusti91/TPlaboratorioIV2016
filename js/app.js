@@ -1,4 +1,4 @@
-angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'satellizer', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.edit'])
+angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'satellizer', 'ui.grid', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.edit', 'ngMap', 'chart.js'])
 
 .run(function($rootScope){
 
@@ -118,6 +118,49 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 			url:"/grillaUsuarios",
 			templateUrl: "grillaUsuarios.html",
 			controller:"grillaUsuariosCtrl"
+		})
+
+		.state("modificarReservas", {
+			url:"/modificarReservas/{id_producto}?:id_cliente:fechaReserva:estado",
+			templateUrl: "modificarReservas.html",
+			controller:"modificarReservasCtrl"
+		})
+
+		.state("grillaLocalesModificar", {
+			url:"/grillaLocalesModificar",
+			templateUrl: "grillaLocalesModificar.html",
+			controller:"grillaLocalesModificarCtrl"
+		})
+
+		.state("modificarLocales", {
+			url:"/modificarLocales/{id_local}?:direccion:lat:lng:id_encargado:cant_empleados",
+			templateUrl: "altaLocales.html",
+			controller:"modificarLocalesCtrl"
+		})
+
+		.state("grillaEmpleadosTransf", {
+			url:"/grillaEmpleadosTransf",
+			templateUrl: "grillaEmpleadosTransf.html",
+			controller:"grillaEmpleadosTransfCtrl"
+		})
+
+		.state("transfEmpleados", {
+			url:"/transfEmpleados/:empleado",
+			cache:false,
+			templateUrl: "transfEmpleados.html",
+			controller:"transfEmpleadosCtrl"
+		})
+
+		.state("encuesta", {
+			url:"/encuesta",
+			templateUrl: "encuesta.html",
+			controller:"EncuestaCtrl"
+		})
+
+		.state("estadisticas", {
+			url:"/estadisticas",
+			templateUrl: "estadisticas.html",
+			controller:"EstadisticasCtrl"
 		})
 
 	//$urlRouterProvider.otherwise("/inicio");

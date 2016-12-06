@@ -10,15 +10,18 @@
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
 	<link rel="stylesheet" href="css/estilos.css">
+	<link rel="stylesheet" href="css/custom-marker.css">
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> 
-	<script SRC="bower_components/angular/angular.min.js" TYPE="text/javascript"></script>
-	<script SRC="bower_components/angular-ui-router/release/angular-ui-router.min.js" TYPE="text/javascript"></script>
+	<script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
 	<script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
 	<script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
 	<script src="bower_components/satellizer/dist/satellizer.min.js" type="text/javascript"></script>
 	<script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
     <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+  	<script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/ngThumb.js"></script>
 	<script src="js/controladores/controlInicio.js"></script>
@@ -36,13 +39,25 @@
 	<script src="js/controladores/controlGrillaLocales.js"></script>
 	<script src="js/controladores/controlGrillaReservas.js"></script>
 	<script src="js/controladores/controlGrillaUsuarios.js"></script>
+	<script src="js/controladores/controlMapa.js"></script>
+	<script src="js/controladores/controlReservasModificar.js"></script>
+	<script src="js/controladores/controlGrillaLocalesModificar.js"></script>
+	<script src="js/controladores/controlLocalModificar.js"></script>
+	<script src="js/controladores/controlGrillaEmpleadosTransf.js"></script>
+	<script src="js/controladores/controltransfEmpleados.js"></script>
+	<script src="js/controladores/controlEncuesta.js"></script>
+	<script src="js/controladores/controlEstadisticas.js"></script>
 	<script src="js/servicios/serviciosCliente.js"></script>
 	<script src="js/servicios/serviciosEmpleado.js"></script>
 	<script src="js/servicios/serviciosLocal.js"></script>
 	<script src="js/servicios/serviciosProducto.js"></script>
 	<script src="js/servicios/serviciosReserva.js"></script>
+	<script src="js/servicios/serviciosEstadisticas.js"></script>
 	<script src="js/factories/factoryUsuario.js"></script>
 	<script src="js/factories/factoryRutas.js"></script>
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrXiGVuRMiqXZgw78T8uwrDgoPZuAPze8&libraries=places" type="text/javascript"></script>
+	<script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
 	<!--El service siempre lo llamamos despues de los controllers y en el angular.module del mismo no hay que agregar []-->
 
 	
@@ -78,7 +93,11 @@
 	                        <li ng-if="userActual.tipo == 'administrador' || userActual.tipo == 'encargado'"><a href="#/grillaProductos">Grilla de Productos</a></li>
 	                        <li ng-if="userActual.tipo == 'empleado' || userActual.tipo == 'cliente' || userActual.tipo == 'encargado'"><a href="#/grillaReservas">Grilla de Reservas</a></li>
 	                        <li ng-if="userActual.tipo == 'encargado'"><a href="#/grillaUsuarios">Grilla de Usuarios</a></li>
+	                        <li ng-if="userActual.tipo == 'encargado' || userActual.tipo == 'administrador'"><a href="#/grillaLocalesModificar">Grilla de Locales</a></li>
+	                        <li ng-if="userActual.tipo == 'administrador'"><a href="#/grillaEmpleadosTransf">Transferir Empleados</a></li>
 	                        <li ng-if="userActual.tipo == 'cliente' || userActual.tipo == 'empleado' || userActual.tipo == 'encargado'"><a href="#/grillaLocales">Reserva!</a></li>
+	                        <li ng-if="userActual.tipo == 'cliente'"><a href="#/encuesta">Realizar Encuesta</a></li>
+	                        <li ng-if="userActual.tipo == 'administrador'"><a href="#/estadisticas">Estadisticas</a></li>
 	                    </ul>
 	                    
 	                    <!--<form action="" class="navbar-form navbar-right" role="search">

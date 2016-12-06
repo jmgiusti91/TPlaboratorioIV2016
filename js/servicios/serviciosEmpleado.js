@@ -6,7 +6,11 @@ angular
 
 		this.traerTodos = TraerTodos;
 
+		this.traerEmpleadosYEncargados = TraerEmpleadosYEncargados;
+
 		this.habilitar = Habilitar;
+
+		this.modificarEmpleado = ModificarEmpleado;
 
 		var url = factoryRutas.RutaEmpleados;
 
@@ -62,6 +66,35 @@ angular
 
 		};
 
+		function TraerEmpleadosYEncargados(numero){
+
+			return $http.get(url + numero)
+				.then(function (respuesta){
+
+					return respuesta;
+
+				}).catch(function (error){
+
+					console.log(error);
+
+				})
+
+		};
+
+		function ModificarEmpleado(empleado){
+
+			return $http.put(url + empleado)
+				.then(function (respuesta){
+
+					return respuesta;
+
+				}).catch(function (error){
+
+					console.log(error);
+
+				})
+
+		};
 		
 
 	})

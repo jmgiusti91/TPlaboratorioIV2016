@@ -134,6 +134,16 @@ class Empleado
 		return $arrEmpleados;
 	}
 
+	public static function TraerTodosLosEmpleadosYEncargados()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM `empleados` WHERE tipo = 'empleado' OR tipo = 'encargado' ");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta->execute();			
+		$arrEmpleados= $consulta->fetchAll(PDO::FETCH_CLASS, "empleado");	
+		return $arrEmpleados;
+	}
+
 	public static function AutenticarEmpleado($mailEmpleado, $claveEmpleado)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

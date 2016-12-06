@@ -92,8 +92,19 @@ class Reserva
 	public static function TraerTodasLasReservas()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT c.nombre as nombreCliente, c.id_cliente, c.email, c.telefono, p.nombre as nombreProducto, p.precio, r.fechaReserva, r.estado FROM clientes as c, productos as p, reservas as r WHERE r.id_cliente = c.id_cliente AND r.id_producto = p.id_producto");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT c.nombre as nombreCliente, c.id_cliente, c.email, c.telefono, p.nombre as nombreProducto, p.precio, p.id_producto, r.fechaReserva, r.estado FROM clientes as c, productos as p, reservas as r WHERE r.id_cliente = c.id_cliente AND r.id_producto = p.id_producto");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta->execute();			
+		$arrReservas= $consulta->fetchAll(PDO::FETCH_OBJ);	
+		return $arrReservas;
+	}
+
+	public static function TraerReservaConsumida($idCliente)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT p.*, r.id_cliente, r.fechaReserva, r.estado FROM reservas as r, productos as p, clientes as c WHERE r.id_cliente = :id_cliente AND r.id_producto = p.id_producto AND r.estado = 'consumido' LIMIT 1");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta->bindValue(':id_cliente', $idCliente, PDO::PARAM_INT);
 		$consulta->execute();			
 		$arrReservas= $consulta->fetchAll(PDO::FETCH_OBJ);	
 		return $arrReservas;
@@ -117,12 +128,12 @@ class Reserva
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				UPDATE reservas 
 				SET fechaReserva=:fechaReserva,
-				estado=:estado,
+				estado=:estado
 				WHERE id_producto=:id_producto
 				AND id_cliente=:id_cliente");
 			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarReserva(:id,:fechaReserva,:id_cliente,:fechaReserva,:estado,:id_local)");
 			$consulta->bindValue(':id_producto',$reserva->id_producto, PDO::PARAM_INT);
-			$consulta->bindValue(':id_cliente', $reserva->id_cliente, PDO::PARAM_STR);
+			$consulta->bindValue(':id_cliente', $reserva->id_cliente, PDO::PARAM_INT);
 			$consulta->bindValue(':fechaReserva', $reserva->fechaReserva, PDO::PARAM_STR);
 			$consulta->bindValue(':estado', $reserva->estado, PDO::PARAM_STR);
 			return $consulta->execute();

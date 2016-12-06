@@ -105,37 +105,6 @@ angular.module('app.controllers')
 
       })
 
-
-    /*$scope.Borrar = function (rta){
-
-    	var dato = JSON.stringify(parseInt(rta.id_producto)); 
-
-      console.log(rta);
-
-    	ProductoService.borrarProducto(dato)
-    		.then(function (respuesta){
-
-    			ProductoService.traerTodos()
-			    	.then(function (respuesta){
-
-			    		console.info("todos los productos", respuesta);
-
-			    		$scope.gridOptions.data = respuesta.data;
-
-			    	}).catch(function (error){
-
-			    		$scope.gridOptions.data = [];
-
-			    	})
-
-    		}).catch(function (error){
-
-    			console.log(error);
-
-    		})
-
-    }*/
-
     function columnDefs () {
       return [
         { field: 'nombreCliente', name: 'Nombre Cliente'},
@@ -146,7 +115,7 @@ angular.module('app.controllers')
         { field: 'fechaReserva', name: 'Fecha Reserva'},
         { field: 'estado', name: 'Estado'},
         { field: 'modificar', name: 'modificar'
-          ,cellTemplate:'<button ui-sref="modificarProductos({id_producto:row.entity.id_producto, nombre:row.entity.nombre, precio:row.entity.precio, foto1:row.entity.foto1, foto2:row.entity.foto2, foto3:row.entity.foto3, tipo:row.entity.tipo, descripcion:row.entity.descripcion, id_local:row.entity.id_local})" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-erase">&nbsp;Modificar</i></button>'
+          ,cellTemplate:'<button ui-sref="modificarReservas({id_producto:row.entity.id_producto, id_cliente:row.entity.id_cliente, fechaReserva:row.entity.fechaReserva, estado:row.entity.estado})" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-erase">&nbsp;Modificar</i></button>'
           ,visible: true
           ,enableFiltering: false
         },

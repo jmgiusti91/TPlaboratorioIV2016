@@ -91,6 +91,30 @@
 
 	    </section>
 
+	    <div ng-controller="mapaCtrl" style="width: 100%; height: 100%">
+	    	<ng-map center="[{{localizacionActual.lat}}, {{localizacionActual.lng}}]" style="height:90%" zoom="9">
+				<directions
+		          draggable="true"
+		          panel="directions-panel"
+		          travel-mode="DRIVING"
+		          origin="[{{localizacionActual.lat}}, {{localizacionActual.lng}}]"
+		          destination="[{{destino.lat}}, {{destino.lng}}]">
+		        </directions>
+				<marker position ="[{{localizacionActual.lat}}, {{localizacionActual.lng}}]" animation="Animation.DROP" ></marker>
+
+        		<div ng-repeat="local in listadoLocales">
+            		<custom-marker position ="[{{local.lat}}, {{local.lng}}]"  animation="Animation.DROP" on-click="IndicarRuta(local.lat, local.lng)" >
+						<img ng-src="fotos/{{local.foto1}}" width="100">
+						<h6>{{local.direccion}}</h6>
+            		</custom-marker>
+            	</div>
+
+	    	</ng-map>
+
+	    	<div id="directions-panel" style="width: 100%; height: 100%; overflow: auto; padding: 0px 5px">
+    		</div>
+	    </div>
+
 
 	    <section class="container-fluid" id="info">
 	    	<div class="row">

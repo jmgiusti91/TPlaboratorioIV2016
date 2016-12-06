@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller("altaLocalesCtrl", function($scope, $auth, $state, UsuarioActual, LocalService, FileUploader){
+.controller("altaLocalesCtrl", function($scope, $auth, $state, $timeout, UsuarioActual, LocalService, FileUploader){
 
 	$scope.usuario = {};
 
@@ -13,7 +13,12 @@ angular.module('app.controllers')
 		console.log(response);
 		//console.log(item);
 		if(item.file.name == $scope.local.foto3){
+
+			$scope.local.id_encargado = null;
+			$scope.local.cant_empleados = 0;
 			var local = JSON.stringify($scope.local);
+
+			console.log(local);
 
 			LocalService.insertarLocal(local)
 			  	.then(function(respuesta) {     	
@@ -28,6 +33,39 @@ angular.module('app.controllers')
 				});
 		}
 	};
+	  // Create the autocomplete object, restricting the search to geographical
+	  // location types.
+	  autocomplete = new google.maps.places.Autocomplete(
+	      /** @type {!HTMLInputElement} */(document.getElementById('direccion')),
+	      {types: ['geocode']});
+
+	  autocomplete.addListener('place_changed', fillInAddress);
+
+	function fillInAddress() {
+	  // Get the place details from the autocomplete object.
+		  var place = autocomplete.getPlace();
+
+		  console.log(place);
+
+		  console.info("latitud", place.geometry.location.lat());
+		  console.info("longitud", place.geometry.location.lng());
+
+		  $scope.local.direccion = place.formatted_address;
+
+		  $scope.local.lat = place.geometry.location.lat().toString();
+
+		  $scope.local.lng = place.geometry.location.lng().toString();
+
+		  // Get each component of the address from the place details
+		  // and fill the corresponding field on the form.
+		  /*for (var i = 0; i < place.address_components.length; i++) {
+		    var addressType = place.address_components[i].types[0];
+		    if (componentForm[addressType]) {
+		      var val = place.address_components[i][componentForm[addressType]];
+		      document.getElementById(addressType).value = val;
+		    }
+		  }*/
+	}
 
 
 	$scope.Guardar = function(){

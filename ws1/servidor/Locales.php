@@ -9,6 +9,10 @@ class Local
   	public $foto1;
   	public $foto2;
   	public $foto3;
+  	public $lat;
+  	public $lng;
+  	public $id_encargado;
+  	public $cant_empleados;
   	//public $codFoto;
 
 //--------------------------------------------------------------------------------//
@@ -35,6 +39,25 @@ class Local
 	{
 		return $this->foto3;
 	}
+	public function GetLat()
+	{
+		return $this->lat;
+	}
+	public function GetLng()
+	{
+		return $this->lng;
+	}
+	public function GetIdEncargado()
+	{
+		return $this->lng;
+	}
+	public function GetCantEmpleados()
+	{
+		return $this->cant_empleados;
+	}
+
+
+
 
 	/*public function getCodFoto()
 	{
@@ -62,6 +85,22 @@ class Local
 	{
 		$this->foto3 = $valor;
 	}
+	public function SetLat($valor)
+	{
+		$this->lat = $valor;
+	}
+	public function SetLng($valor)
+	{
+		$this->lng = $valor;
+	}
+	public function SetIdEncargado($valor)
+	{
+		$this->id_encargado = $valor;
+	}
+	public function SetCantEmpleados($valor)
+	{
+		$this->cant_empleados = $valor;
+	}
 
 	/*public function SetCodFoto($valor)
 	{
@@ -78,6 +117,10 @@ class Local
 			$this->foto1 = $obj->foto1;
 			$this->foto2 = $obj->foto2;
 			$this->foto3 = $obj->foto3;
+			$this->lat = $obj->lat;
+			$this->lng = $obj->lng;
+			$this->id_encargado = $obj->id_encargado;
+			$this->cant_empleados = $obj->cant_empleados;
 			//$this->codFoto = $obj->codFoto;
 		}
 	}
@@ -86,7 +129,7 @@ class Local
 //--TOSTRING	
   	public function ToString()
 	{
-	  	return $this->direccion."-".$this->foto1."-".$this->foto2."-".$this->foto3;
+	  	return $this->direccion."-".$this->foto1."-".$this->foto2."-".$this->foto3."-".$this->lat."-".$this->lng."-".$this->id_encargado."-".$this->cant_empleados;
 	}
 //--------------------------------------------------------------------------------//
 
@@ -115,6 +158,16 @@ class Local
 		$arrLocales= $consulta->fetchAll(PDO::FETCH_CLASS, "local");	
 		return $arrLocales;
 	}
+
+	public static function TraerTodosLosLocalesActivos()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM `locales` WHERE id_encargado IS NOT NULL AND cant_empleados >= 2 ");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta->execute();			
+		$arrLocales= $consulta->fetchAll(PDO::FETCH_CLASS, "local");	
+		return $arrLocales;
+	}
 	
 	public static function BorrarLocal($idParametro)
 	{	
@@ -135,7 +188,11 @@ class Local
 				SET direccion=:direccion,
 				foto1=:foto1,
 				foto2=:foto2,
-				foto3=:foto3
+				foto3=:foto3,
+				lat=:lat,
+				lng=:lng,
+				id_encargado=:id_encargado,
+				cant_empleados=:cant_empleados
 				WHERE id_local=:id");
 			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarLocal(:id,:nombre,:direccion,:foto1,:foto2,:foto3)");
 			$consulta->bindValue(':id',$local->id_local, PDO::PARAM_INT);
@@ -143,6 +200,10 @@ class Local
 			$consulta->bindValue(':foto1', $local->foto1, PDO::PARAM_STR);
 			$consulta->bindValue(':foto2', $local->foto2, PDO::PARAM_STR);
 			$consulta->bindValue(':foto3', $local->foto3, PDO::PARAM_STR);
+			$consulta->bindValue(':lat', $local->lat, PDO::PARAM_STR);
+			$consulta->bindValue(':lng', $local->lng, PDO::PARAM_STR);
+			$consulta->bindValue(':id_encargado', $local->id_encargado, PDO::PARAM_INT);
+			$consulta->bindValue(':cant_empleados', $local->cant_empleados, PDO::PARAM_INT);
 			return $consulta->execute();
 	}
 
@@ -153,12 +214,16 @@ class Local
 	public static function InsertarLocal($local)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into locales (direccion,foto1,foto2,foto3)values(:direccion,:foto1,:foto2,:foto3)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into locales (direccion,foto1,foto2,foto3,lat,lng,id_encargado,cant_empleados)values(:direccion,:foto1,:foto2,:foto3,:lat,:lng,:id_encargado,:cant_empleados)");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarLocal (:nombre,:direccion,:dni,:foto1,:foto2,:foto3,:codFoto)");
 		$consulta->bindValue(':direccion', $local->direccion, PDO::PARAM_STR);
 		$consulta->bindValue(':foto1', $local->foto1, PDO::PARAM_STR);
 		$consulta->bindValue(':foto2', $local->foto2, PDO::PARAM_STR);
 		$consulta->bindValue(':foto3', $local->foto3, PDO::PARAM_STR);
+		$consulta->bindValue(':lat', $local->lat, PDO::PARAM_STR);
+		$consulta->bindValue(':lng', $local->lng, PDO::PARAM_STR);
+		$consulta->bindValue(':id_encargado', $local->id_encargado, PDO::PARAM_INT);
+		$consulta->bindValue(':cant_empleados', $local->cant_empleados, PDO::PARAM_INT);
 		//$consulta->bindValue(':codFoto', $local->codFoto, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();

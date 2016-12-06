@@ -1,0 +1,27 @@
+  <head>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+
+<div>
+  <form id="FormReserva" name="FormReserva" enctype="multipart/form-data">
+      
+        <h1>Modificar Reserva</h1>
+        
+        <fieldset>
+          <legend><span class="number">1</span>Info Basica</legend>
+          <input type="date" name="fechaReserva" id="fechaReserva" ng-model="reserva.fechaReserva" max="{{fechaMax}}" required>
+          <span id="lblFecha" style="color:#FF0000;float:right;font-size:18" ng-show='FormReserva.fechaReserva.$error.required'>* La fecha de reserva es requerida</span><br>
+          <span style="color:#FF0000;float:right;font-size:18;margin-left:0" ng-show='FormReserva.fechaReserva.$invalid'>* La fecha no esta en un rango valido</span>
+
+          <br><label for="estado">Estado:</label>
+          <select id="estado" name="estado" ng-model="reserva.estado" ng-init="reserva.estado">
+              <option value="invalido">--Seleccione--</option>
+              <option value="activo">Activo</option>
+              <option value="consumido">Consumido</option>
+              <option value="calificado">Calificado</option>
+              <option value="cancelado">Cancelado</option>
+          </select>
+
+        <button ng-disabled="FormReserva.$invalid || reserva.estado == 'invalido' || FormReserva.fechaReserva.$invalid" name="guardar" ng-click="Guardar()" >Modificar Reserva</button>
+      </form>
+</div>

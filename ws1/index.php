@@ -99,12 +99,19 @@ $app->put('/clientes/{idCliente}/{habilitado}', function ($request, $response, $
 $app->post('/empleados/{objeto}', function ($request, $response, $args) {
     $empleado = json_decode($args['objeto']);
 
-    Empleado::InsertarEmpleado($empleado);
-    $response->write($args['objeto']);
+    return Empleado::InsertarEmpleado($empleado);
+    //$response->write($args['objeto']);
 });
 
 $app->get('/empleados[/]', function ($request, $response, $args) {
     $datos = Empleado::TraerTodosLosEmpleados();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+$app->get('/empleados/{numero}', function ($request, $response, $args) {
+    $datos = Empleado::TraerTodosLosEmpleadosYEncargados();
     $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
     
     return $response;
@@ -117,6 +124,12 @@ $app->put('/empleados/{idEmpleado}/{habilitado}', function ($request, $response,
     return $args['habilitado'];
 });
 
+$app->put('/empleados/{empleado}', function ($request, $response, $args) {
+    $empleado = json_decode($args['empleado']);
+    
+    return Empleado::ModificarEmpleado($empleado);
+});
+
 $app->post('/locales/{objeto}', function ($request, $response, $args) {
     $local = json_decode($args['objeto']);
 
@@ -124,8 +137,22 @@ $app->post('/locales/{objeto}', function ($request, $response, $args) {
     $response->write($args['objeto']);
 });
 
+$app->put('/locales/{objeto}', function ($request, $response, $args) {
+    $local = json_decode($args['objeto']);
+
+    Local::ModificarLocal($local);
+    $response->write($args['objeto']);
+});
+
 $app->get('/locales[/]', function ($request, $response, $args) {
     $datos = Local::TraerTodosLosLocales();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
+$app->get('/locales/{numero}', function ($request, $response, $args) {
+    $datos = Local::TraerTodosLosLocalesActivos();
     $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
     
     return $response;
@@ -182,6 +209,21 @@ $app->get('/reservas[/]', function ($request, $response, $args) {
     $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
     
     return $response;
+});
+
+$app->get('/reservas/{idCliente}', function ($request, $response, $args) {
+    $datos = Reserva::TraerReservaConsumida($args['idCliente']);
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+    //return $args['idCliente'];
+});
+
+$app->put('/reservas/{objeto}', function ($request, $response, $args) {
+    $reserva = json_decode($args['objeto']);
+
+    Reserva::ModificarReserva($reserva);
+    $response->write($args['objeto']);
 });
 
 

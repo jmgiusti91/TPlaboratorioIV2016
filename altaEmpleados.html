@@ -42,6 +42,11 @@
           <input type="password" id="clave2" name="clave2" ng-model="empleado.copiaclave" style="color:#000;" placeholder="Reingrese clave" required>
           <span id="lblClave2" style="color:#FF0000;float:right;font-size:18" ng-show='FormIngreso.clave2.$error.required'>* La clave es requerida</span><br>
           <br><span style="color:#FF0000;float:right;font-size:18;margin-left:200" ng-show='empleado.password != empleado.copiapassword'>* Las claves no coinciden</span>
+
+          <br><label for="local">Local:</label>
+          <select id="local" name="local" ng-model="empleado.id_local" ng-init="empleado.id_local">
+                <option ng-repeat="l in listadoLocales" value="{{l.id_local}}">{{l.direccion}}</option>
+          </select>
         </fieldset> 
 
         <button ng-disabled="FormIngreso.$invalid || empleado.password != empleado.copiapassword || empleado.tipo == 'invalido'" name="guardar" ng-click="Guardar()">Registrar Nuevo Empleado</button>

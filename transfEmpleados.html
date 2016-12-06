@@ -1,0 +1,20 @@
+<head>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+  <form id="FormIngreso" name="FormIngreso" enctype="multipart/form-data">
+      
+        <h1>Transferir Empleados</h1>
+        
+        <fieldset>
+          <legend>{{empleado.nombre}}</legend>
+
+          <br><label for="local">Local:</label>
+          <select id="local" name="local" ng-model="empleado.id_local" ng-init="empleado.id_local">
+                <option ng-repeat="l in listadoLocales" value="{{l.id_local}}">{{l.direccion}}</option>
+          </select>
+        </fieldset>
+
+        <button ng-disabled="FormIngreso.$invalid || empleado.password != empleado.copiapassword || empleado.tipo == 'invalido'" name="guardar" ng-click="Guardar()">Confirmar cambios</button>
+
+  </form>

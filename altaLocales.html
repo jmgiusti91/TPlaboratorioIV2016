@@ -10,7 +10,7 @@
         <fieldset>
           <legend><span class="number">1</span>Info Basica</legend>
           <label for="direccion">Direccion:
-          <input type="text" id="direccion" name="direccion" ng-model="local.direccion" placeholder="ingrese direccion" value="" required />
+          <input type="text" id="direccion" name="direccion" ng-model="local.direccion" placeholder="ingrese direccion" value="" required googleplace/>
           <span id="lblDireccion" style="color:#FF0000;float:right;font-size:18" ng-show='FormIngreso.direccion.$error.required'>* El direccion es requerida</span></label>
  
         <div ng-if="SubidorDeArchivos.queue.length < 3">
