@@ -37,7 +37,8 @@ angular.module('app.controllers')
 					 //aca se ejetuca si retorno sin errores      	
 					 //console.log("El id ingresado es: "+respuesta.data);
 					 console.info("respuesta", respuesta);
-					 $state.go("locales-perfil");
+					 var idLocalModificado = JSON.stringify($scope.local.id_local);
+					 $state.go("locales-perfil", {idLocal: idLocalModificado});
 
 				},function errorCallback(response) {     		
 						//aca se ejecuta cuando hay errores

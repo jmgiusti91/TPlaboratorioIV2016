@@ -1,14 +1,20 @@
 angular.module('app.controllers')
 
-.controller("altaProductosCtrl", function($scope, $auth, UsuarioActual, $state, LocalService, ProductoService, FileUploader){
+.controller("altaProductosCtrl", function($scope, $auth, UsuarioActual, $state, LocalService, ProductoService, FileUploader, factoryRutas){
 
 	$scope.producto = {};
 
 	$scope.producto.tipo = "pizzas";
 
+	$scope.producto.nombre = "Pizza con Pepperoni";
+
+	$scope.producto.descripcion = "Deliciosa pizza con los mas exquisitos pepperonis";
+
+	$scope.producto.precio = 233;
+
 	$scope.listadoLocales = {};
 
-	$scope.SubidorDeArchivos = new FileUploader({url:'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/archivo/'});
+	$scope.SubidorDeArchivos = new FileUploader({url:factoryRutas.RutaArchivos});
 
 
 
@@ -42,7 +48,8 @@ angular.module('app.controllers')
 					 //aca se ejetuca si retorno sin errores      	
 					 //console.log("El id ingresado es: "+respuesta.data);
 					 console.info("respuesta", respuesta);
-					 $state.go("productos-perfil");
+					 var idProductoInsertado = JSON.stringify(parseInt(respuesta.data));
+					 $state.go("productos-perfil", {idProducto: idProductoInsertado});
 
 				},function errorCallback(response) {     		
 						//aca se ejecuta cuando hay errores

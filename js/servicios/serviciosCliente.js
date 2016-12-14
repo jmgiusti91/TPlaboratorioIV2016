@@ -23,6 +23,7 @@ angular
 				}).catch(function (error){
 
 					console.log(error);
+					$( "div.falla" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 				})
 

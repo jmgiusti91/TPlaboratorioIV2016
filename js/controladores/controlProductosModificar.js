@@ -46,7 +46,8 @@ angular.module('app.controllers')
 					 //aca se ejetuca si retorno sin errores      	
 					 //console.log("El id ingresado es: "+respuesta.data);
 					 console.info("respuesta", respuesta);
-					 $state.go("productos-perfil");
+					 var idProductoModificado = JSON.stringify($scope.producto.id_producto);
+					 $state.go('productos-perfil', {idProducto: idProductoModificado});
 
 				},function errorCallback(response) {     		
 						//aca se ejecuta cuando hay errores

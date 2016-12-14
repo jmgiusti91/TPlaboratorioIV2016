@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
 	<link rel="stylesheet" href="css/estilos.css">
 	<link rel="stylesheet" href="css/custom-marker.css">
+	<link rel="stylesheet" href="css/estilo-alertas.css">
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> 
 	<script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
@@ -53,8 +54,11 @@
 	<script src="js/servicios/serviciosProducto.js"></script>
 	<script src="js/servicios/serviciosReserva.js"></script>
 	<script src="js/servicios/serviciosEstadisticas.js"></script>
+	<script src="js/servicios/serviciosEncuesta.js"></script>
 	<script src="js/factories/factoryUsuario.js"></script>
 	<script src="js/factories/factoryRutas.js"></script>
+	<script src="js/directivas/directivas.js"></script>
+	<script src="js/filtros/filtros.js"></script>
 
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrXiGVuRMiqXZgw78T8uwrDgoPZuAPze8&libraries=places" type="text/javascript"></script>
 	<script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
@@ -82,7 +86,7 @@
 	                
 	                <div class="collapse navbar-collapse" id="navegacion-fm" ng-controller="IndexCtrl">
 	                    <ul class="nav navbar-nav">
-	                        <li><a href="#/inicio">Inicio</a></li>
+	                        <li><a href="#/">Inicio</a></li>
 	                        <li ng-if="userActual.login"><a ng-click="Logout()" class="btn btn-danger btn-sm" style="cursor:pointer;">Log Out</a></li>
 	                        <li ng-if="!userActual.login"><a href="#/log/login">Log In</a></li>
 	                        <li ng-if="!userActual.login"><a href="#/log/register">Registrarse</a></li>
@@ -96,7 +100,7 @@
 	                        <li ng-if="userActual.tipo == 'encargado' || userActual.tipo == 'administrador'"><a href="#/grillaLocalesModificar">Grilla de Locales</a></li>
 	                        <li ng-if="userActual.tipo == 'administrador'"><a href="#/grillaEmpleadosTransf">Transferir Empleados</a></li>
 	                        <li ng-if="userActual.tipo == 'cliente' || userActual.tipo == 'empleado' || userActual.tipo == 'encargado'"><a href="#/grillaLocales">Reserva!</a></li>
-	                        <li ng-if="userActual.tipo == 'cliente'"><a href="#/encuesta">Realizar Encuesta</a></li>
+	                        <li ng-if="userActual.tipo == 'cliente' && haceEncuesta"><a href="#/encuesta">Realizar Encuesta</a></li>
 	                        <li ng-if="userActual.tipo == 'administrador'"><a href="#/estadisticas">Estadisticas</a></li>
 	                    </ul>
 	                    

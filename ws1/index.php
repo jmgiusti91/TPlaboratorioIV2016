@@ -5,7 +5,7 @@ include_once('servidor/Locales.php');
 include_once('servidor/Clientes.php');
 include_once('servidor/Empleados.php');
 include_once('servidor/Productos.php');
-include_once('servidor/Pedidos.php');
+include_once('servidor/Encuestas.php');
 include_once('servidor/Reservas.php');
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
@@ -58,19 +58,6 @@ $app->add(function ($req, $res, $next) {
 
 $app->get('/', function ($request, $response, $args) {
     $response->write("Welcome to Slim!");
-    return $response;
-});
-
-$app->get('/personas[/]', function ($request, $response, $args) {
-    $datos = Persona::TraerTodasLasPersonas();
-    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
-    
-    return $response;
-});
-
-$app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
-    $response->write("Datos usuario ");
-    var_dump($args);
     return $response;
 });
 /* POST: Para crear recursos */
@@ -133,8 +120,7 @@ $app->put('/empleados/{empleado}', function ($request, $response, $args) {
 $app->post('/locales/{objeto}', function ($request, $response, $args) {
     $local = json_decode($args['objeto']);
 
-    Local::InsertarLocal($local);
-    $response->write($args['objeto']);
+    return Local::InsertarLocal($local);
 });
 
 $app->put('/locales/{objeto}', function ($request, $response, $args) {
@@ -161,8 +147,7 @@ $app->get('/locales/{numero}', function ($request, $response, $args) {
 $app->post('/productos/{objeto}', function ($request, $response, $args) {
     $producto = json_decode($args['objeto']);
 
-    Producto::InsertarProducto($producto);
-    $response->write($args['objeto']);
+    return Producto::InsertarProducto($producto);
 });
 
 $app->put('/productos/{objeto}', function ($request, $response, $args) {
@@ -226,6 +211,19 @@ $app->put('/reservas/{objeto}', function ($request, $response, $args) {
     $response->write($args['objeto']);
 });
 
+$app->post('/encuestas/{objeto}', function ($request, $response, $args) {
+    $encuesta = json_decode($args['objeto']);
+
+    return Encuesta::InsertarEncuesta($encuesta);
+});
+
+$app->get('/encuestas[/]', function ($request, $response, $args) {
+    $datos = Encuesta::TraerTodasLasEncuestas();
+    $response->write(json_encode($datos)); /*No puedo pasar un objeto referencial a la memoria RAM del servidor a la memoria RAM del cliente.. Por eso, tengo que encondearlo a JSON.*/
+    
+    return $response;
+});
+
 
 $app->post('/archivo[/]', function ($request, $response, $args) {
     //var_dump($request);
@@ -245,9 +243,11 @@ $app->post('/archivo[/]', function ($request, $response, $args) {
     $archivoTmp = $nombreFoto[0] . ".jpg";
 
     $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $archivoTmp;
+
+    move_uploaded_file($_FILES[ 'file' ][ 'tmp_name' ], $ruta);
     //$dst = $path . $_FILES['photoimg']['name'];
 
-    if (($img_info = getimagesize($temporal)) === FALSE) //Este codigo lo utilizamos para cambiar tamaño de imagen
+    /*if (($img_info = getimagesize($temporal)) === FALSE) //Este codigo lo utilizamos para cambiar tamaño de imagen
       die("Image not found or not an image");
 
     $width = $img_info[0];
@@ -266,7 +266,7 @@ $app->post('/archivo[/]', function ($request, $response, $args) {
 
     $tmp = imagecreatetruecolor($nuevoWidth, $nuevoHeight);
     imagecopyresampled($tmp, $src, 0, 0, 0, 0, $nuevoWidth, $nuevoHeight, $width, $height);
-    imagejpeg($tmp, $ruta);
+    imagejpeg($tmp, $ruta);*/
 
 
     //$rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $archivoTmp;
@@ -276,75 +276,7 @@ $app->post('/archivo[/]', function ($request, $response, $args) {
         echo $e->message;
     }
     return $response;
-}); /*Desde el cliente vamos a pasar un string.. Aca, en PHP, lo vamos a tomar encodear a JSON y tener listo el obj PHP..*/
-
-$app->post('/archivoModificar/{codFoto}', function ($request, $response, $args) {
-
-    $codFoto = $args['codFoto'];
-    //var_dump($_FILES);
-    $temporal = $_FILES[ 'archivo' ][ 'tmp_name' ];
-
-    $nombreFoto = explode(".", $_FILES['archivo']['name']);
-    $archivoTmp = $nombreFoto[0]. " - ".$codFoto . ".jpg";
-
-    $rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $archivoTmp;
-
-    if (($img_info = getimagesize($temporal)) === FALSE) //Este codigo lo utilizamos para cambiar tamaño de imagen
-      die("Image not found or not an image");
-
-    $width = $img_info[0];
-    $height = $img_info[1];
-
-    switch ($img_info[2]) {
-      case IMAGETYPE_GIF  : $src = imagecreatefromgif($temporal);  break;
-      case IMAGETYPE_JPEG : $src = imagecreatefromjpeg($temporal); break;
-      case IMAGETYPE_PNG  : $src = imagecreatefrompng($temporal);  break;
-      case IMAGETYPE_BMP  : $src = imagecreatefromwbmp($temporal);  break;
-      default : die("Unknown filetype");
-    }
-
-    $nuevoWidth = 1000;
-    $nuevoHeight = 500;
-
-    $tmp = imagecreatetruecolor($nuevoWidth, $nuevoHeight);
-    imagecopyresampled($tmp, $src, 0, 0, 0, 0, $nuevoWidth, $nuevoHeight, $width, $height);
-    imagejpeg($tmp, $rutaMod);
-
-    echo json_encode($archivoTmp);
-}); 
-
-// /* PUT: Para editar recursos */
-$app->put('/persona/{objeto}', function ($request, $response, $args) {
-
-    $persona = json_decode($args['objeto']);
-    //$archivoTmp = $persona->foto1. " - ".$persona->codFoto . ".jpg";
-    $rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $persona->foto1;
-    $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $persona->foto1;
-    copy($rutaMod, $ruta);
-
-    $archivoTmp = $persona->foto2. " - ".$persona->codFoto . ".jpg";
-    $rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $persona->foto2;
-    $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $persona->foto2;
-    copy($rutaMod, $ruta);
-
-    $archivoTmp = $persona->foto3. " - ".$persona->codFoto . ".jpg";
-    $rutaMod = "..". DIRECTORY_SEPARATOR . 'fotosModificar' . DIRECTORY_SEPARATOR . $persona->foto3;
-    $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $persona->foto3;
-    copy($rutaMod, $ruta);
-
-    //$persona->foto1 = $persona->foto1. " - ". $persona->codFoto . ".jpg";
-    //$persona->foto2 = $persona->foto2. " - ". $persona->codFoto . ".jpg";
-    //$persona->foto3 = $persona->foto3. " - ". $persona->codFoto . ".jpg";
-    
-    Persona::ModificarPersona($persona);
-    return $response;
-});
-
-// /* DELETE: Para eliminar recursos */
-$app->delete('/persona/{id}', function ($request, $response, $args) {
-    Persona::BorrarPersona($args['id']);
-    return $response;
-});
+}); /*Desde el cliente vamos a pasar un string.. Aca, en PHP, lo vamos a tomar encodear a JSON y tener listo el obj PHP..*/ 
 /**
  * Step 4: Run the Slim application
  *

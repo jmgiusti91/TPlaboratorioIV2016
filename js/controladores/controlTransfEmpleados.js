@@ -80,6 +80,7 @@ angular.module('app.controllers')
 						.then(function (respuesta){
 
 							console.info("local modificado", respuesta);
+							$( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 						}).catch(function (error){
 
@@ -132,6 +133,7 @@ angular.module('app.controllers')
 					.then(function (respuesta){
 
 						console.info("local modificado", respuesta);
+						$( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 					}).catch(function (error){
 

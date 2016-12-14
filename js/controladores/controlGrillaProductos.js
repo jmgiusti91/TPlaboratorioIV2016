@@ -41,11 +41,11 @@ angular.module('app.controllers')
 
     //console.log($scope.gridOptions.columnDefs);
 
-    if ($scope.usuario.tipo == "cliente" || $scope.usuario.tipo == "empleado") {
+    /*if ($scope.usuario.tipo == "cliente" || $scope.usuario.tipo == "empleado") {
     	$scope.gridOptions.columnDefs[2].visible = false;
-    };
+    };*/
     // Activo la busqueda en todos los campos.
-    $scope.gridOptions.enableFiltering = false;
+    $scope.gridOptions.enableFiltering = true;
     // Configuracion del idioma.
     i18nService.setCurrentLang('es');
 
@@ -103,7 +103,19 @@ angular.module('app.controllers')
       return [
         { field: 'nombre', name: 'nombre', height:45},
         { field: 'precio', name: 'precio'},
-        { field: 'tipo', name: 'tipo'},
+        { field: 'tipo', name: 'tipo'
+          ,filter: {
+            // term: '1',
+            type: uiGridConstants.filter.SELECT,
+            selectOptions: [
+              {value: 'pizzas', label: 'Pizzas'},
+              {value: 'picadas', label: 'Picadas'},
+              {value: 'postres', label: 'Postres'}
+            ]
+          }
+          //filtro de los datos
+          ,cellFilter: 'tipoProducto'
+        },
         { field: 'modificar', name: 'modificar'
           ,cellTemplate:'<button ui-sref="modificarProductos({id_producto:row.entity.id_producto, nombre:row.entity.nombre, precio:row.entity.precio, foto1:row.entity.foto1, foto2:row.entity.foto2, foto3:row.entity.foto3, tipo:row.entity.tipo, descripcion:row.entity.descripcion, id_local:row.entity.id_local})" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-erase">&nbsp;Modificar</i></button>'
           ,visible: true

@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller('EstadisticasCtrl', function($scope, $state, $timeout, UsuarioActual, EstadisticasService){
+.controller('EstadisticasCtrl', function($scope, $state, $timeout, UsuarioActual, EstadisticasService, EncuestaService){
 
 	$scope.usuario = JSON.parse(UsuarioActual.getFullData());
 
@@ -13,7 +13,7 @@ angular.module('app.controllers')
 
 			$scope.ventasLocales = respuesta;
 
-			console.info("Ventas Locales", respuesta);
+			//console.info("Ventas Locales", respuesta);
 
 			var cantVentasUno = 0;
 			var cantVentasDos = 0;
@@ -55,7 +55,7 @@ angular.module('app.controllers')
 
 			$scope.ventasEmpleados = respuesta;
 
-			console.info("Ventas Empleados", respuesta);
+			//console.info("Ventas Empleados", respuesta);
 
 			var cantVentasUno = 0;
 			var cantVentasDos = 0;
@@ -132,7 +132,7 @@ angular.module('app.controllers')
 
 			$scope.comprasCliente = respuesta;
 
-			console.info("Compras Clientes", respuesta);
+			//console.info("Compras Clientes", respuesta);
 
 			var cantComprasUno = 0;
 			var cantComprasDos = 0;
@@ -208,7 +208,7 @@ angular.module('app.controllers')
 
 			$scope.recaudadoDia = respuesta;
 
-			console.info("Importe Dia", respuesta);
+			//console.info("Importe Dia", respuesta);
 
 			var cantImporteUno = 0;
 			var cantImporteDos = 0;
@@ -269,7 +269,7 @@ angular.module('app.controllers')
 
 			$scope.ventasTipoProd = respuesta;
 
-			console.info("Importe Dia", respuesta);
+			//console.info("Importe Dia", respuesta);
 
 			var cantImporteUnoInicio = 0;
 			var cantImporteDosInicio = 0;
@@ -312,5 +312,238 @@ angular.module('app.controllers')
 			console.log(error);
 
 		})
+
+
+		EncuestaService.traerTodos()
+		.then(function (respuesta){
+
+			$scope.listadoEncuestas = respuesta.data;
+
+			//console.info("Listado encuestas", respuesta);
+
+			var cantHigieneCero = 0;
+			var cantHigieneUno = 0;
+			var cantHigieneDos = 0;
+
+			var cantInstalacionesCero = 0;
+			var cantInstalacionesUno = 0;
+			var cantInstalacionesDos = 0;
+
+			var cantSeguridadCero = 0;
+			var cantSeguridadUno = 0;
+			var cantSeguridadDos = 0;
+
+			for (var i = 0; i < $scope.listadoEncuestas.length; i++){
+
+				console.log($scope.listadoEncuestas[i].higieneLocal);
+
+				switch($scope.listadoEncuestas[i].higieneLocal){
+
+					case '0':
+						cantHigieneCero++;
+						console.log("Sumo NS/NC");
+					break;
+
+					case '1':
+						cantHigieneUno++;
+						console.log("Sumo Regular/Insatisfecho");
+					break;
+
+					case '2':
+						cantHigieneUno++;
+						console.log("Sumo Regular/Insatisfecho");
+					break;
+
+					case '3':
+						cantHigieneDos++;
+						console.log("Sumo Satisfecho/Muy Satisfecho");
+					break;
+
+					case '4':
+						cantHigieneDos++;
+						console.log("Sumo Satisfecho/Muy Satisfecho");
+					break;
+
+				}
+
+				switch($scope.listadoEncuestas[i].instalacionesLocal){
+
+					case '0':
+						cantInstalacionesCero++;
+					break;
+
+					case '1':
+						cantInstalacionesUno++;
+					break;
+
+					case '2':
+						cantInstalacionesUno++;
+					break;
+
+					case '3':
+						cantInstalacionesDos++;
+					break;
+
+					case '4':
+						cantInstalacionesDos++;
+					break;
+
+				}
+
+
+				switch($scope.listadoEncuestas[i].seguridadLocal){
+
+					case '0':
+						cantSeguridadCero++;
+					break;
+
+					case '1':
+						cantSeguridadUno++;
+					break;
+
+					case '2':
+						cantSeguridadUno++;
+					break;
+
+					case '3':
+						cantSeguridadDos++;
+					break;
+
+					case '4':
+						cantSeguridadDos++;
+					break;
+
+				}
+
+			};
+
+			$scope.labelLocales = ["Higiene", "Seguridad", "Instalaciones"];
+
+			$scope.seriesLocales = ['Muy Satisfecho/Satisfecho', 'Regular/Insatisfecho', 'NS/NC'];
+
+			$scope.dataLocales = [[cantHigieneDos, cantSeguridadDos, cantInstalacionesDos], [cantHigieneUno, cantSeguridadUno, cantInstalacionesUno], [cantHigieneCero, cantSeguridadCero, cantInstalacionesCero]];
+
+		}).catch(function (error){
+
+			console.log(error);
+
+		})
+
+
+		EncuestaService.traerTodos()
+		.then(function (respuesta){
+
+			$scope.listadoEncuestas = respuesta.data;
+
+			//console.info("Listado encuestas", respuesta);
+
+			var cantCalidadCero = 0;
+			var cantCalidadUno = 0;
+			var cantCalidadDos = 0;
+
+			var cantVelocidadCero = 0;
+			var cantVelocidadUno = 0;
+			var cantVelocidadDos = 0;
+
+			var cantCordialidadCero = 0;
+			var cantCordialidadUno = 0;
+			var cantCordialidadDos = 0;
+
+			for (var i = 0; i < $scope.listadoEncuestas.length; i++){
+
+				console.log($scope.listadoEncuestas[i].calidadAtencion);
+
+				switch($scope.listadoEncuestas[i].calidadAtencion){
+
+					case '0':
+						cantCalidadCero++;
+						console.log("Sumo NS/NC");
+					break;
+
+					case '1':
+						cantCalidadUno++;
+						console.log("Sumo Regular/Insatisfecho");
+					break;
+
+					case '2':
+						cantCalidadUno++;
+						console.log("Sumo Regular/Insatisfecho");
+					break;
+
+					case '3':
+						cantCalidadDos++;
+						console.log("Sumo Satisfecho/Muy Satisfecho");
+					break;
+
+					case '4':
+						cantCalidadDos++;
+						console.log("Sumo Satisfecho/Muy Satisfecho");
+					break;
+
+				}
+
+				switch($scope.listadoEncuestas[i].velocidadAtencion){
+
+					case '0':
+						cantVelocidadCero++;
+					break;
+
+					case '1':
+						cantVelocidadUno++;
+					break;
+
+					case '2':
+						cantVelocidadUno++;
+					break;
+
+					case '3':
+						cantVelocidadDos++;
+					break;
+
+					case '4':
+						cantVelocidadDos++;
+					break;
+
+				}
+
+
+				switch($scope.listadoEncuestas[i].cordialidadAtencion){
+
+					case '0':
+						cantCordialidadCero++;
+					break;
+
+					case '1':
+						cantCordialidadUno++;
+					break;
+
+					case '2':
+						cantCordialidadUno++;
+					break;
+
+					case '3':
+						cantCordialidadDos++;
+					break;
+
+					case '4':
+						cantCordialidadDos++;
+					break;
+
+				}
+
+			};
+
+			$scope.labelAtencion = ["Calidad", "Cordialidad", "Velocidad"];
+
+			$scope.seriesAtencion = ['Muy Satisfecho/Satisfecho', 'Regular/Insatisfecho', 'NS/NC'];
+
+			$scope.dataAtencion = [[cantCalidadDos, cantCordialidadDos, cantVelocidadDos], [cantCalidadUno, cantCordialidadUno, cantVelocidadUno], [cantCalidadCero, cantCordialidadCero, cantVelocidadCero]];
+
+		}).catch(function (error){
+
+			console.log(error);
+
+		})
+
 
 })

@@ -5,9 +5,9 @@ angular.module('app.controllers')
 	$scope.usuario = JSON.parse(UsuarioActual.getFullData());
 	console.log($scope.usuario);
 	$scope.cliente = {};
-	$scope.cliente.nombre = "Jacinto";
-	$scope.cliente.telefono = 42228888;
-	$scope.cliente.email = "cliente1@cliente1.com"
+	$scope.cliente.nombre = "Zacarias Flores Del Campo";
+	$scope.cliente.telefono = 43576656;
+	$scope.cliente.email = "cliente8@cliente8.com"
 	$scope.cliente.clave = 1234;
 	$scope.cliente.copiaclave = 1234;
 
@@ -21,6 +21,7 @@ angular.module('app.controllers')
 			.then(function (respuesta){
 
 				console.info("Respuesta", respuesta);
+				$( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 			}).catch(function (error){
 

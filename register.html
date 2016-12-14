@@ -1,7 +1,8 @@
 <head>
     <link rel="stylesheet" href="css/main.css">
 </head>
-
+  <div class="alert-box exito">Cliente Registrado!</div>
+  <div class="alert-box falla">Error al registrar cliente.</div>
   <form id="FormIngreso" name="FormIngreso" enctype="multipart/form-data">
       
         <h1>Registrarse</h1>
@@ -64,7 +65,7 @@
         </div>
 
         <div ng-if="usuario.tipo != ''">
-          <button ng-disabled="FormIngreso.$invalid || cliente.password != cliente.copiapassword" name="guardar" ng-click="Guardar()" href="#ventanaOk" data-toggle="modal">Registrarse</button>
+          <button ng-disabled="FormIngreso.$invalid || cliente.password != cliente.copiapassword" name="guardar" ng-click="Guardar()">Registrarse</button>
         </div>
 
   </form>

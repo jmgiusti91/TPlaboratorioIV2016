@@ -5,9 +5,9 @@ angular.module('app.controllers')
 
 	$scope.usuario = JSON.parse(UsuarioActual.getFullData());
 	$scope.empleado = {};
-	$scope.empleado.nombre = "nombreEmpleado";
+	$scope.empleado.nombre = "Lugones";
 	$scope.empleado.tipo = "empleado";
-	$scope.empleado.email = "empleado1@empleado1.com"
+	$scope.empleado.email = "lugones@pizzeriasargenta.com"
 	$scope.empleado.clave = 1234;
 	$scope.empleado.copiaclave = 1234;
 	$scope.empleado.id_local = null;
@@ -73,10 +73,12 @@ angular.module('app.controllers')
 						.then(function (respuesta){
 
 							console.info("local modificado", respuesta);
+							 $( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 						}).catch(function (error){
 
 							console.info("Error en modificar local", error);
+							$( "div.falla" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 						})
 
@@ -87,6 +89,7 @@ angular.module('app.controllers')
 			}).catch(function (error){
 
 				console.info("Error", error);
+				$( "div.falla" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 			})
 
@@ -111,10 +114,12 @@ angular.module('app.controllers')
 						.then(function (respuesta){
 
 							console.info("local modificado", respuesta);
+							$( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 						}).catch(function (error){
 
 							console.info("Error en modificar local", error);
+							$( "div.falla" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 						})
 
@@ -123,6 +128,7 @@ angular.module('app.controllers')
 			}).catch(function (error){
 
 				console.info("Error", error);
+				$( "div.falla" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 			})
 
@@ -136,10 +142,12 @@ angular.module('app.controllers')
 				.then(function (respuesta){
 
 					console.log("respuesta", respuesta);
+					$( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 				}).catch(function (error){
 
 					console.log("error", error);
+					$( "div.falla" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
 				})
 

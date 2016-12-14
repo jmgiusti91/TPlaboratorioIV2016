@@ -187,6 +187,7 @@ angular.module('app.controllers')
             .then(function (respuesta){
 
               console.log(respuesta);
+              $( "div.exito" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 
             }).catch(function (error){
 
@@ -196,11 +197,36 @@ angular.module('app.controllers')
 
       };
 
+
+      $scope.verLocal = function(local){
+
+        var localElegido = JSON.stringify(local.id_local);
+
+        var url = $state.href('locales-perfil', {idLocal: localElegido});
+
+        window.open(url,'_blank');
+
+      };
+
+      $scope.verProducto = function(producto){
+
+        var productoElegido = JSON.stringify(producto.id_producto);
+
+        var url = $state.href('productos-perfil', {idProducto: productoElegido});
+
+        window.open(url,'_blank');
+
+      };
+
     function columnProductos () {
       return [
         { field: 'nombre', name: 'nombre', height:45},
         { field: 'precio', name: 'precio'},
         { field: 'tipo', name: 'tipo'},
+        { field: 'verproducto', name: 'verproducto'
+          ,cellTemplate:'<button ng-click="grid.appScope.verProducto(row.entity)" class="btn btn-info btn-sm">Ver Producto</button>'
+          ,enableFiltering: false
+        },
         { field: 'reserva', name: 'reserva'
           ,cellTemplate:'<button ng-click="grid.appScope.realizarReserva(row.entity)" class="btn btn-success btn-sm" href="#ventanaReserva" data-toggle="modal">Reservar!</button>'
           ,visible: true
@@ -214,11 +240,11 @@ angular.module('app.controllers')
       return [
         { field: 'direccion', name: 'direccion', height:45},
         { field: 'local', name: 'local'
-          ,cellTemplate:'<button ui-sref="locales-perfil">Ver Local</button>'
+          ,cellTemplate:'<button ng-click="grid.appScope.verLocal(row.entity)" class="btn btn-info btn-sm" target="_blank">Ver Local</button>'
           ,enableFiltering: false
         },
         { field: 'productos', name: 'productos'
-          ,cellTemplate:'<button ng-click="grid.appScope.traerProductos(row.entity)">Ver Productos</button>'
+          ,cellTemplate:'<button ng-click="grid.appScope.traerProductos(row.entity)" class="btn btn-info btn-sm">Ver Productos</button>'
           ,enableFiltering: false
         }
       ];

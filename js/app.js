@@ -6,18 +6,20 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 	$rootScope.userActual.login = false;
 	$rootScope.userActual.nombre = "JuanGiusti";
 
+	$rootScope.haceEncuesta = true;
+
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $authProvider){
 
 	$authProvider.loginUrl ="LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/servidor/jwt/php/auth.php";
-	$authProvider.tokenName = "MiTokenGeneradoEnPHP";
+	$authProvider.tokenName = "MiTokenDePizzeriasArgenta";
 	$authProvider.tokenPrefix="Aplicacion";
 	$authProvider.authHeader="data";
 
 	$stateProvider
 		.state("inicio", {
-			url:"/inicio",
+			url:"/",
 			templateUrl:"inicio.html",
 			controller:"controlInicio"
 		})
@@ -61,7 +63,8 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 		})
 
 		.state("locales-perfil", {
-			url:"/locales-perfil",
+			url:"/locales-perfil/:idLocal",
+			cache: false,
 			templateUrl: "locales-perfil.html",
 			controller:"localesPerfilCtrl"
 		})
@@ -73,7 +76,8 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 		})
 
 		.state("productos-perfil", {
-			url:"/productos-perfil",
+			url:"/productos-perfil/:idProducto",
+			cache: false,
 			templateUrl: "productos-perfil.html",
 			controller:"productosPerfilCtrl"
 		})
@@ -163,7 +167,7 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 			controller:"EstadisticasCtrl"
 		})
 
-	//$urlRouterProvider.otherwise("/inicio");
+	//$urlRouterProvider.otherwise("/");
 
 })
 

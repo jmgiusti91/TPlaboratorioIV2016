@@ -113,7 +113,20 @@ angular.module('app.controllers')
         { field: 'precio', name: 'Precio Producto'},
         { field: 'nombreProducto', name: 'Nombre Producto'},
         { field: 'fechaReserva', name: 'Fecha Reserva'},
-        { field: 'estado', name: 'Estado'},
+        { field: 'estado', name: 'Estado'
+            ,filter: {
+            // term: '1',
+            type: uiGridConstants.filter.SELECT,
+            selectOptions: [
+              {value: 'activo', label: 'Activo'},
+              {value: 'consumido', label: 'Consumido'},
+              {value: 'calificado', label: 'Calificado'},
+              {value: 'cancelado', label: 'Cancelado'}
+            ]
+          }
+          //filtro de los datos
+          ,cellFilter: 'tipoEstado'
+        },
         { field: 'modificar', name: 'modificar'
           ,cellTemplate:'<button ui-sref="modificarReservas({id_producto:row.entity.id_producto, id_cliente:row.entity.id_cliente, fechaReserva:row.entity.fechaReserva, estado:row.entity.estado})" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-erase">&nbsp;Modificar</i></button>'
           ,visible: true

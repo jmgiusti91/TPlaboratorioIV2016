@@ -1,12 +1,12 @@
 angular.module('app.controllers')
 
-.controller("altaLocalesCtrl", function($scope, $auth, $state, $timeout, UsuarioActual, LocalService, FileUploader){
+.controller("altaLocalesCtrl", function($scope, $auth, $state, $timeout, UsuarioActual, LocalService, FileUploader, factoryRutas){
 
 	$scope.usuario = {};
 
 	$scope.local = {};
 
-	$scope.SubidorDeArchivos = new FileUploader({url:'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/archivo/'});
+	$scope.SubidorDeArchivos = new FileUploader({url:factoryRutas.RutaArchivos});
 
 
 	$scope.SubidorDeArchivos.onSuccessItem=function(item, response, status, headers){
@@ -25,7 +25,8 @@ angular.module('app.controllers')
 					 //aca se ejetuca si retorno sin errores      	
 					 //console.log("El id ingresado es: "+respuesta.data);
 					 console.info("respuesta", respuesta);
-					 $state.go("locales-perfil");
+					 var idLocalInsertado = JSON.stringify(respuesta.data);
+					 $state.go("locales-perfil", {idLocal: idLocalInsertado});
 
 				},function errorCallback(response) {     		
 						//aca se ejecuta cuando hay errores

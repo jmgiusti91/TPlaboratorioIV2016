@@ -1,7 +1,9 @@
 <head>
     <link rel="stylesheet" href="css/main.css">
 </head>
-
+  
+  <div class="alert-box exito">Empleado Registrado!</div>
+  <div class="alert-box falla">Error al registrar empleado.</div>
   <form id="FormIngreso" name="FormIngreso" enctype="multipart/form-data">
       
         <h1>Alta de Empleados</h1>
@@ -52,3 +54,4 @@
         <button ng-disabled="FormIngreso.$invalid || empleado.password != empleado.copiapassword || empleado.tipo == 'invalido'" name="guardar" ng-click="Guardar()">Registrar Nuevo Empleado</button>
 
   </form>
+

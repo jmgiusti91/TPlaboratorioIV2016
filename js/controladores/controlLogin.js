@@ -19,12 +19,12 @@ angular.module('app.controllers')
 	}
 
 	$scope.IngresoEmpleado = function(){
-		$scope.usuario.email = "empleado1@empleado1.com";
+		$scope.usuario.email = "pedro@pizzeriasargenta.com";
 		$scope.usuario.clave = "1234";
 	}
 
 	$scope.IngresoEncargado = function(){
-		$scope.usuario.email = "encargado1@encargado1.com";
+		$scope.usuario.email = "luisa@pizzeriasargenta.com";
 		$scope.usuario.clave = "1234";
 	}
 

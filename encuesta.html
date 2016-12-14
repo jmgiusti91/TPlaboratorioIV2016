@@ -206,10 +206,10 @@
 
   <tr>
     <td data-th="Seleccione">Seleccione: </td>
-    <td data-th="Calidad Producto"><input type="checkbox" ng-model="encuesta.preferencia.producto" value="producto"/></td>
-    <td data-th="Calidad Atencion"><input type="checkbox" ng-model="encuesta.preferencia.atencion" value="atencion"/></td>
-    <td data-th="Servicios Local"><input type="checkbox" ng-model="encuesta.preferencia.local" value="local"/></td>
-    <td data-th="Aplicacion Web"><input type="checkbox" ng-model="encuesta.preferencia.web" value="web"/></td>
+    <td data-th="Calidad Producto"><input type="checkbox" ng-model="encuesta.producto" value="producto"/></td>
+    <td data-th="Calidad Atencion"><input type="checkbox" ng-model="encuesta.atencion" value="atencion"/></td>
+    <td data-th="Servicios Local"><input type="checkbox" ng-model="encuesta.local" value="local"/></td>
+    <td data-th="Aplicacion Web"><input type="checkbox" ng-model="encuesta.web" value="web"/></td>
   </tr>
 </table>
 
@@ -219,7 +219,23 @@
   <textarea ng-model="encuesta.comentario" cols="110" rows="5" maxlength="150"></textarea>
 </table>
 
-<button class="btn btn-success btn-lg" style="width:100%" ng-disabled="!encuesta.calidadProducto || !encuesta.calidadAtencion || !encuesta.velocidadAtencion || !encuesta.cordialidadAtencion || !encuesta.opinionLocal || !encuesta.higieneLocal || !encuesta.instalacionesLocal || !encuesta.seguridadLocal || !encuesta.comodidadLocal || !encuesta.costoServicio || !encuesta.calidadAplicacionWeb || !encuesta.velocidadAplicacionWeb || !encuesta.reservasOnline || !encuesta.servicioTelefonico" ng-click="Guardar()">Enviar</button>
+<button class="btn btn-success btn-lg" style="width:100%" ng-disabled="!encuesta.calidadProducto || !encuesta.calidadAtencion || !encuesta.velocidadAtencion || !encuesta.cordialidadAtencion || !encuesta.opinionLocal || !encuesta.higieneLocal || !encuesta.instalacionesLocal || !encuesta.seguridadLocal || !encuesta.comodidadLocal || !encuesta.costoServicio || !encuesta.calidadAplicacionWeb || !encuesta.velocidadAplicacionWeb || !encuesta.reservasOnline || !encuesta.servicioTelefonico" ng-click="Guardar()" href="#ventanaEncuesta" data-toggle="modal" data-backdrop="static" data-keyboard="false">Enviar</button>
 <br><br>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="ventanaEncuesta">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Encuesta cargada!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Agradecemos el tiempo que ha dedicado a completar la encuesta y esperamos que haya disfrutado de una hermosa estadia en nuestro lugar.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="FinalizarEncuesta()">Aceptar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </div>

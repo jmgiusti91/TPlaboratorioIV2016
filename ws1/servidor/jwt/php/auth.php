@@ -28,7 +28,7 @@ if (!is_null($clienteActual) && !empty($clienteActual) && $clienteActual->habili
 
 	$jwt = JWT::encode($token, $key);
 
-	$ArrayConToken["MiTokenGeneradoEnPHP"] = $jwt;
+	$ArrayConToken["MiTokenDePizzeriasArgenta"] = $jwt;
 } else {
 
 	$empleadoActual = Empleado::AutenticarEmpleado($usuario->email, $usuario->clave);
@@ -46,10 +46,10 @@ if (!is_null($clienteActual) && !empty($clienteActual) && $clienteActual->habili
 
 		$jwt = JWT::encode($token, $key);
 
-		$ArrayConToken["MiTokenGeneradoEnPHP"] = $jwt;
+		$ArrayConToken["MiTokenDePizzeriasArgenta"] = $jwt;
 	} else {
 
-		$ArrayConToken["MiTokenGeneradoEnPHP"] = false;
+		$ArrayConToken["MiTokenDePizzeriasArgenta"] = false;
 
 	}
 	

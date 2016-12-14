@@ -19,7 +19,7 @@
           </span></label>
 
           <br><label for="precio">Precio:
-          <input type="number" id="precio" name="precio" ng-model="producto.precio" placeholder="ingrese Precio" value="" required />
+          <input type="number" id="precio" name="precio" ng-model="producto.precio" placeholder="ingrese Precio" value="" min="1" max="999" required />
           <span id="lblPrecio" style="color:#FF0000;float:right;font-size:18" ng-show='FormIngreso.precio.$error.required'>* El Precio es requerido</span></label>
 
           <br><label for="tipo">Tipo:</label>
@@ -71,6 +71,6 @@
           </button>
         </li>
 
-        <button ng-disabled="FormIngreso.$invalid || SubidorDeArchivos.queue.length != 3 || producto.id_local == 'invalido'" name="guardar" ng-click="Guardar()" >Sign Up</button>
+        <button ng-disabled="FormIngreso.$invalid || SubidorDeArchivos.queue.length != 3 || producto.tipo == 'invalido'" name="guardar" ng-click="Guardar()" >Sign Up</button>
       </form>
 </div>

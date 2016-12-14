@@ -15,6 +15,10 @@ angular
 
     objeto.RutaReservas = 'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/reservas/';
 
+    objeto.RutaEncuestas = 'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/encuestas/';
+
+    objeto.RutaArchivos = 'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/archivo/';
+
     return objeto;
 
 

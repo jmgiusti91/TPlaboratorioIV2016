@@ -29,6 +29,8 @@ angular.module('app.controllers')
 
 				console.log(respuesta);
 
+				$state.go("grillaReservas");
+
 			}).catch(function (error){
 
 				console.log(error);
