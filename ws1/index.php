@@ -1,12 +1,14 @@
 <?php
 use Slim\Http\Headers;
 header('Content-Type: image/jpeg');
+include_once 'servidor/jwt/vendor/autoload.php';
 include_once('servidor/Locales.php');
 include_once('servidor/Clientes.php');
 include_once('servidor/Empleados.php');
 include_once('servidor/Productos.php');
 include_once('servidor/Encuestas.php');
 include_once('servidor/Reservas.php');
+
 /**
  * Step 1: Require the Slim Framework using Composer's autoloader
  *
@@ -14,6 +16,7 @@ include_once('servidor/Reservas.php');
  * PSR-4 autoloader.
  */
 require 'vendor/autoload.php';
+use \Firebase\JWT\JWT;
 
 /**
  * Step 2: Instantiate a Slim application
@@ -60,6 +63,59 @@ $app->get('/', function ($request, $response, $args) {
     $response->write("Welcome to Slim!");
     return $response;
 });
+
+$app->post('/login/', function ($request, $response, $args) {
+    
+$DatosDelModeloPorPost = file_get_contents('php://input');
+$usuario = json_decode($DatosDelModeloPorPost);
+
+$clienteActual = Cliente::AutenticarCliente($usuario->email, $usuario->clave);
+
+if (!is_null($clienteActual) && !empty($clienteActual) && $clienteActual->habilitado == 1) {
+    $key = "aaaa";
+    $ClaveDeEncriptacion="estaeslaclave";
+    $token["nombre"]=$clienteActual->nombre;
+    $token["tipo"]="cliente";
+    $token["email"] = $clienteActual->email;
+    $token["telefono"] = $clienteActual->telefono;
+    $token["habilitado"] = $clienteActual->habilitado;
+    $token["id"] = $clienteActual->id_cliente;
+    $token["iat"]=time();
+    $token["exp"]=time()+20;
+
+    $jwt = JWT::encode($token, $key);
+
+    $ArrayConToken["MiTokenDePizzeriasArgenta"] = $jwt;
+} else {
+
+    $empleadoActual = Empleado::AutenticarEmpleado($usuario->email, $usuario->clave);
+
+    if (!is_null($empleadoActual) && $empleadoActual->habilitado == 1) {
+        $key = "aaaa";
+        $ClaveDeEncriptacion="estaeslaclave";
+        $token["nombre"]=$empleadoActual->nombre;
+        $token["tipo"]=$empleadoActual->tipo;
+        $token["email"] = $empleadoActual->email;
+        $token["habilitado"] = $empleadoActual->habilitado;
+        $token["id"] = $empleadoActual->id_empleado;
+        $token["iat"]=time();
+        $token["exp"]=time()+20;
+
+        $jwt = JWT::encode($token, $key);
+
+        $ArrayConToken["MiTokenDePizzeriasArgenta"] = $jwt;
+    } else {
+
+        $ArrayConToken["MiTokenDePizzeriasArgenta"] = false;
+
+    }
+    
+}
+
+echo json_encode($ArrayConToken);
+
+});
+
 /* POST: Para crear recursos */
 $app->post('/clientes/{objeto}', function ($request, $response, $args) {
     $cliente = json_decode($args['objeto']);

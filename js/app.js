@@ -12,7 +12,7 @@ angular.module('app', ['app.controllers', 'ui.router', 'angularFileUpload', 'sat
 
 .config(function ($stateProvider, $urlRouterProvider, $authProvider){
 
-	$authProvider.loginUrl ="LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/servidor/jwt/php/auth.php";
+	$authProvider.loginUrl ="LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/login/";
 	$authProvider.tokenName = "MiTokenDePizzeriasArgenta";
 	$authProvider.tokenPrefix="Aplicacion";
 	$authProvider.authHeader="data";

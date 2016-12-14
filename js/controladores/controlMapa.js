@@ -13,6 +13,8 @@ angular.module('app.controllers')
 	$scope.destino = {};
 
 	var options = {
+				maximumAge: 50000,
+				timeout: 20000,
                 enableHighAccuracy: true
             };
 
@@ -24,6 +26,12 @@ angular.module('app.controllers')
 		      };
 		    }, function(error){
 		    	console.log(error.message);
+		    	jQuery.post( "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCQP6UEJy0yokHj7dkWM6exrkt7iP1qBu0", function(success) {
+					$scope.localizacionActual = {
+				        lat: success.location.lat,
+				        lng: success.location.lng
+				      };
+  				})
 		    }, options);
 	  }
 

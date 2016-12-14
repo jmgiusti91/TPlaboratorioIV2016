@@ -15,5 +15,7 @@ angular.module('app.controllers')
 		$state.go('log.login');
 
 	};
+
+	$state.go('inicio');
 	
 })
