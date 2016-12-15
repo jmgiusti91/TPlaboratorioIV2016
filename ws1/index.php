@@ -295,10 +295,10 @@ $app->post('/archivo[/]', function ($request, $response, $args) {
         $nuevoCodFoto++;
     }*/
     
-    $nombreFoto = explode(".", $_FILES['file']['name']);
-    $archivoTmp = $nombreFoto[0] . ".jpg";
+    //$nombreFoto = explode(".", $_FILES['file']['name']);
+    //$archivoTmp = $nombreFoto[0] . ".jpg";
 
-    $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $archivoTmp;
+    $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $_FILES['file']['name'];
 
     move_uploaded_file($_FILES[ 'file' ][ 'tmp_name' ], $ruta);
     //$dst = $path . $_FILES['photoimg']['name'];

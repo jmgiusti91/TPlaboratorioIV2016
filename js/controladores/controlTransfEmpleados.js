@@ -115,8 +115,8 @@ angular.module('app.controllers')
 
 		if ($scope.empleado.tipo == "empleado") {
 
-			$scope.localElegido.cant_empleados += 1;
-			$scope.localAnterior.cant_empleados -= 1;
+			$scope.localElegido.cant_empleados = parseInt($scope.localElegido.cant_empleados) + 1;
+			$scope.localAnterior.cant_empleados = parseInt($scope.localAnterior.cant_empleados) - 1;
 
 			EmpleadoService.modificarEmpleado(empleado)
 			.then(function (respuesta){

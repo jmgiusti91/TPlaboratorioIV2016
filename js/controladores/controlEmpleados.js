@@ -138,6 +138,8 @@ angular.module('app.controllers')
 
 			$scope.empleado.id_local = null;
 
+			empleado = JSON.stringify($scope.empleado);
+
 			EmpleadoService.insertarEmpleado(empleado)
 				.then(function (respuesta){
 

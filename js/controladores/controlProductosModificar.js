@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller("modificarProductosCtrl", function($scope, $auth, UsuarioActual, $stateParams, $state, LocalService, ProductoService, FileUploader){
+.controller("modificarProductosCtrl", function($scope, $auth, UsuarioActual, $stateParams, $state, LocalService, ProductoService, FileUploader, factoryRutas){
 
 	$scope.producto = {};
 
@@ -12,7 +12,7 @@ angular.module('app.controllers')
 
 	$scope.listadoLocales = {};
 
-	$scope.SubidorDeArchivos = new FileUploader({url:'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/archivo/'});
+	$scope.SubidorDeArchivos = new FileUploader({url:factoryRutas.RutaArchivos});
 
 	console.log($stateParams);
 

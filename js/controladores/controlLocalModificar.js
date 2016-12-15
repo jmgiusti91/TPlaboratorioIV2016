@@ -1,6 +1,6 @@
 angular.module('app.controllers')
 
-.controller("modificarLocalesCtrl", function($scope, $auth, $state, $timeout, $stateParams, UsuarioActual, LocalService, FileUploader){
+.controller("modificarLocalesCtrl", function($scope, $auth, $state, $timeout, $stateParams, UsuarioActual, LocalService, FileUploader, factoryRutas){
 
 	$scope.usuario = {};
 
@@ -20,7 +20,7 @@ angular.module('app.controllers')
 	
 	console.info("Local Modificar", $scope.local);
 
-	$scope.SubidorDeArchivos = new FileUploader({url:'http://localhost:8080/LAB-IV/pizzeria-argenta/TPlaboratorioIV2016/ws1/archivo/'});
+	$scope.SubidorDeArchivos = new FileUploader({url:factoryRutas.RutaArchivos});
 
 
 	$scope.SubidorDeArchivos.onSuccessItem=function(item, response, status, headers){
